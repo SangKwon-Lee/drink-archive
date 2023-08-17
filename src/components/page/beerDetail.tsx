@@ -1,10 +1,14 @@
 'use client';
-import Images from '@utils/images';
-import { Rating } from '@mui/material';
-import { styled } from 'styled-components';
-import { Main, MainWrap } from '@commonStyles/styles';
 import dayjs from 'dayjs';
+import { styled } from 'styled-components';
+
+// components
+import { Rating } from '@mui/material';
 import List from '@components/list/list';
+import { Main, MainWrap } from '@commonStyles/styles';
+
+// utils
+import Images from '@utils/images';
 
 export default function BeerDetailPage() {
   return (

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Roboto } from 'next/font/google';
-
 // styles
 import Providers from '@styles/providers';
 import StyledComponentsRegistry from '@styles/registry';

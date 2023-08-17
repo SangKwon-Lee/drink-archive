@@ -34,6 +34,10 @@
       "@commonStyles/*": [
         "./src/components/commons/*"
       ],
+      "@api/*": [
+        "./src/lib/api/*"
+      ],
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

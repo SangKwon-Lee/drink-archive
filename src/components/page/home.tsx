@@ -1,8 +1,12 @@
 'use client';
 import styled from 'styled-components';
-import Images from '@utils/images';
 import { Main, MainWrap } from '@commonStyles/styles';
-import MainBanner from '../banner/mainBanner';
+
+// components
+import MainBanner from '@components/banner/mainBanner';
+
+// utils
+import Images from '@utils/images';
 
 export default function HomePage() {
   return (

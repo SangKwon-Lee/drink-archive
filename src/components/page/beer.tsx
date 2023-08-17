@@ -1,12 +1,15 @@
 'use client';
 import { useState } from 'react';
-import Images from '@utils/images';
-import { Rating } from '@mui/material';
-import Sort from '@components/sort/sort';
 import { styled } from 'styled-components';
-import { Main, MainWrap } from '@commonStyles/styles';
-import MainBanner from '../banner/mainBanner';
+
+// components
+import Sort from '@components/sort/sort';
 import List from '@components/list/list';
+import { Main, MainWrap } from '@commonStyles/styles';
+import MainBanner from '@components/banner/mainBanner';
+
+// utils
+import Images from '@utils/images';
 
 const sortArr = [
   {
