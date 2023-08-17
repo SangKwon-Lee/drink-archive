@@ -45,7 +45,9 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
     >
       <DrawerWrap>
         <DrawerLogoWrap>
-          <DrawerLogo>Drink Archive</DrawerLogo>
+          <LinkStyle href={'/'} title="home">
+            <NavItem>Drink Archive</NavItem>
+          </LinkStyle>
         </DrawerLogoWrap>
         <NavWrap>
           {NavArr.map(({ href, text, icon }) => (
@@ -73,8 +75,17 @@ const DrawerLogoWrap = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.gray.gray80};
 `;
 
-const DrawerLogo = styled.div`
+const DrawerLogo = styled.nav`
   ${({ theme }) => theme.textSize.S20W700};
+  text-decoration: none;
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.orange};
+  }
+  &:visited {
+    color: ${({ theme }) => theme.gray.gray10};
+  }
+  transition: all 0.2s;
 `;
 
 const NavWrap = styled.aside`
@@ -83,7 +94,7 @@ const NavWrap = styled.aside`
   gap: 36px;
 `;
 
-const NavItem = styled.nav<{ $isPath: boolean }>`
+const NavItem = styled.nav<{ $isPath?: boolean }>`
   color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
 
   ${({ theme }) => theme.textSize.S20W700};

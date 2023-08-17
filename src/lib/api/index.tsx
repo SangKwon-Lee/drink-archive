@@ -1,21 +1,21 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
-
+const defaultOptions = {
+  baseURL: API_HOST
+};
 export default function useAPI() {
-  const [token, setToken] = useState('');
+  const instance = axios.create(defaultOptions);
   useEffect(() => {
-    if (localStorage) {
-      setToken(localStorage.getItem('token') || '');
+    const token = localStorage.getItem('token');
+    if (token) {
+      instance.interceptors.request.use(function (config) {
+        config.headers.Authorization = `Bearer ${token}`;
+        return config;
+      });
     }
   }, []);
 
-  return axios.create({
-    baseURL: API_HOST,
-    headers: {
-      Authorization: token ? `Bearer ${token}` : ''
-    },
-    timeout: 5000
-  });
+  return instance;
 }

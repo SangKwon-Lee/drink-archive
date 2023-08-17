@@ -55,7 +55,7 @@ export default function LoginSignupPage() {
         });
         if (result.jwt) {
           localStorage.setItem('token', result.jwt);
-          router.push('/');
+          window.location.href = '/';
         }
       } else {
         await apiServer.post(`/users`, {
