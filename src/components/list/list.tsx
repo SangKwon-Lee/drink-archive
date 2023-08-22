@@ -1,28 +1,49 @@
 import Images from '@utils/images';
-import styled from 'styled-components';
+import { BeerListType } from 'type';
 import { Rating } from '@mui/material';
+import styled from 'styled-components';
+import Link from 'next/link';
+import { toFixedNumber } from '@utils/toFixedNumber';
 
-export default function List() {
+interface Props {
+  list: BeerListType[];
+}
+
+const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
+
+export default function List({ list }: Props) {
   return (
     <ListWrap>
-      {new Array(12).fill(0).map((data, index) => (
-        <ListItem key={index}>
-          <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
-            <Images src="/test.jpeg" style={{ objectFit: 'cover' }} />
-          </ListImg>
-          <ListContents>
-            <ListNameWrap>
-              <ListName>맥파이 첫차</ListName>
-              <ListType>포터</ListType>
-            </ListNameWrap>
-            <RatingWrap>
-              <Rating name="read-only" value={4.7} precision={0.5} readOnly />
-              <RatingNum>4.7</RatingNum>
-            </RatingWrap>
-            <ListType>472명이 별점을 남겼어요</ListType>
-          </ListContents>
-        </ListItem>
-      ))}
+      {Array.isArray(list) &&
+        list.length > 0 &&
+        list.map((data) => (
+          <Link href={`/beer/${data.id}`}>
+            <ListItem key={data.id}>
+              <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
+                <Images
+                  style={{ objectFit: 'cover' }}
+                  src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
+                />
+              </ListImg>
+              <ListContents>
+                <ListNameWrap>
+                  <ListName>{data.attributes.name}</ListName>
+                  <ListType>{data.attributes.type}</ListType>
+                </ListNameWrap>
+                <RatingWrap>
+                  <Rating
+                    name="read-only"
+                    value={toFixedNumber(data.attributes?.rating)}
+                    precision={0.5}
+                    readOnly
+                  />
+                  <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
+                </RatingWrap>
+                <ListType>{data.attributes.people}명이 별점을 남겼어요</ListType>
+              </ListContents>
+            </ListItem>
+          </Link>
+        ))}
     </ListWrap>
   );
 }

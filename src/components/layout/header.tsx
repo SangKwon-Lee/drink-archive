@@ -6,6 +6,7 @@ import { styled } from 'styled-components';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import MenuDrawer from '@components/drawer/menuDrawer';
+import { getCookie, deleteCookie } from 'cookies-next';
 
 const NavArr = [
   {
@@ -43,7 +44,7 @@ export default function Header() {
   const [mount, setMount] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    deleteCookie('_ga_t');
     alert('로그아웃 됐습니다');
     window.location.reload();
   };
@@ -55,13 +56,13 @@ export default function Header() {
       setIsLogin(true);
     } catch (e) {
       setIsLogin(false);
-      localStorage.removeItem('token');
+      deleteCookie('_ga_t');
       alert('잘못된 접근입니다.');
     }
   };
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (getCookie('_ga_t')) {
       handleCheckToken();
     }
   }, []);

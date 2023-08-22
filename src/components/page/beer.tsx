@@ -1,15 +1,17 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { styled } from 'styled-components';
 
 // components
 import Sort from '@components/sort/sort';
 import List from '@components/list/list';
-import { Main, MainWrap } from '@commonStyles/styles';
+import { Main, MainWrap } from '@styles/styles';
 import MainBanner from '@components/banner/mainBanner';
 
-// utils
+// utils & type
 import Images from '@utils/images';
+import useAPI from '@api/index';
+import { BeerListType } from 'type';
 
 const sortArr = [
   {
@@ -33,9 +35,37 @@ const typeArr = [
   }
 ];
 
+const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
+
 export default function BeerPage() {
+  const apiServer = useAPI();
+  // * 정렬 순서
   const [sort, setSort] = useState('new');
+  //  * 맥주 타입
   const [type, setType] = useState('all');
+
+  // * 맥주 리스트
+  const [beerLest, setBeerList] = useState<BeerListType[]>([]);
+
+  // * 맥주 정보 불러오기
+  const handleGetBeerList = async () => {
+    try {
+      const { data, status } = await apiServer.get(`/beers?populate=*`, {
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`
+        }
+      });
+      if (status === 200 && Array.isArray(data.data)) {
+        setBeerList(data.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    handleGetBeerList();
+  }, []);
 
   return (
     <>
@@ -60,7 +90,7 @@ export default function BeerPage() {
               <Sort title="종류" setSort={setType} sort={type} sortArr={typeArr} />
             </SortWrap>
           </ListNavWrap>
-          <List />
+          <List list={beerLest} />
         </MainWrap>
       </Main>
     </>

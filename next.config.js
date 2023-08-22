@@ -11,12 +11,6 @@ const nextConfig = {
     //             `
   },
   assetPrefix: '',
-  // images: {
-  //   domains: ['https://ddragon.leagueoflegends.com'],
-  //   path: 'https://ddragon.leagueoflegends.com',
-  //   formats: ['image/webp'],
-  //   minimumCacheTTL: 31536000
-  // },
   compiler: {
     styledComponents: true,
     ssr: true

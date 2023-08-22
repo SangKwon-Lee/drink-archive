@@ -4,10 +4,11 @@ import Link from 'next/link';
 import useAPI from '@api/index';
 import { useState } from 'react';
 import { SignupShemeType } from 'type';
+import { setCookie } from 'cookies-next';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
-import { Main } from '@commonStyles/styles';
+import { Main } from '@styles/styles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -54,14 +55,15 @@ export default function LoginSignupPage() {
           password: data.password.trim()
         });
         if (result.jwt) {
-          localStorage.setItem('token', result.jwt);
+          setCookie('_ga_t', result.jwt);
           window.location.href = '/';
         }
       } else {
         await apiServer.post(`/users`, {
           ...data,
           email: `${data.nickname}@drink.com`,
-          role: 1
+          role: 1,
+          profile: 4
         });
         alert('회원가입을 축하합니다');
         router.push('/login');

@@ -5,52 +5,117 @@ import { styled } from 'styled-components';
 // components
 import { Rating } from '@mui/material';
 import List from '@components/list/list';
-import { Main, MainWrap } from '@commonStyles/styles';
+import { Main, MainWrap } from '@styles/styles';
 
 // utils
 import Images from '@utils/images';
+import { BeerDetailType } from 'type';
+import { useEffect, useState } from 'react';
+import useAPI from '@api/index';
+import { toFixedNumber } from '@utils/toFixedNumber';
 
-export default function BeerDetailPage() {
+interface Props {
+  data: BeerDetailType;
+}
+
+const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
+
+export default function BeerDetailPage({ data }: Props) {
+  const apiServer = useAPI();
+  const [id, setId] = useState(0);
+  const handleGetMe = async () => {
+    try {
+      const { data } = await apiServer.get(`/users/me`);
+      console.log(data);
+      setId(data.id);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleReviewClick = async () => {
+    if (id === 0) {
+      return alert('로그인을 해주세요 !');
+    }
+    try {
+      await apiServer.post(`/beer-rating-give`, {
+        beers: data.id,
+        user: id,
+        rating: 5
+      });
+      alert('리뷰가 등록 됐습니다.');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    handleGetMe();
+  }, []);
+
   return (
     <Main>
       <MainWrap>
         <ProductWrap>
           <ProductImg>
-            <Images src="/test.jpeg" style={{ objectFit: 'cover' }} />
+            <Images
+              src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
+              style={{ objectFit: 'cover' }}
+            />
           </ProductImg>
           <ProductContents>
-            <ProductComp>제조사 / 맥파이</ProductComp>
-            <ProductName>맥파이 첫 차</ProductName>
-            <ProductComp>포터</ProductComp>
+            <ProductComp>제조사 / {data.attributes?.company}</ProductComp>
+            <ProductName>{data.attributes?.name}</ProductName>
+            <ProductComp>{data.attributes?.type}</ProductComp>
             <RatingWrap>
-              <Rating name="read-only" value={4.7} precision={0.5} readOnly size="large" />
-              <RatingNum>4.7</RatingNum>
+              <Rating
+                name="read-only"
+                value={toFixedNumber(data.attributes?.rating)}
+                precision={0.5}
+                readOnly
+                size="large"
+              />
+              <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
             </RatingWrap>
-            <RatingText>472명이 별점을 남겼어요</RatingText>
-            <ProductDesc>
-              맥파이 첫 차에 대한 간단한 설명입니다.맥파이 첫 차에 대한 간단한 설명입니다.맥파이 첫
-              차에 대한 간단한 설명입니다.맥파이 첫 차에 대한 간단한 설명입니다.맥파이 첫 차에 대한
-              간단한 설명입니다.
-            </ProductDesc>
-            <ReviewBtn>별점 남기기</ReviewBtn>
+            <RatingText>{data.attributes?.people}명이 별점을 남겼어요</RatingText>
+            <ProductDesc>{data.attributes?.description}</ProductDesc>
+            <ReviewBtn onClick={handleReviewClick}>{'별점 남기기'}</ReviewBtn>
           </ProductContents>
         </ProductWrap>
         <RatingList>
           <RatingSub>최근 10개의 별점만 표시됩니다</RatingSub>
-          {new Array(10).fill(0).map((__, index) => (
-            <RatingItem key={index}>
-              <Images src="/test.jpeg" width={50} height={50} circle />
-              <RatingStarWrap>
-                <RatingNameWrap>
-                  <RatingName>Kogong</RatingName>
-                  <RatingDate>{dayjs().format('YYYY-MM-DD')}</RatingDate>
-                </RatingNameWrap>
-                <Rating name="read-only" value={4.7} precision={0.5} readOnly size="large" />
-              </RatingStarWrap>
-            </RatingItem>
-          ))}
+          {Array.isArray(data.attributes?.beer_ratings?.data) &&
+          data.attributes.beer_ratings?.data.length > 0 ? (
+            data.attributes.beer_ratings?.data.map((rating, index) => (
+              <RatingItem key={index}>
+                <Images
+                  src={`${IMG_HOST}${rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}`}
+                  width={50}
+                  height={50}
+                  circle
+                />
+                <RatingStarWrap>
+                  <RatingNameWrap>
+                    <RatingName>{rating.attributes.user.data?.attributes.nickname}</RatingName>
+                    <RatingDate>
+                      {dayjs(rating.attributes.updatedAt).format('YYYY-MM-DD')}
+                    </RatingDate>
+                  </RatingNameWrap>
+                  <Rating
+                    name="read-only"
+                    value={rating.attributes.rating}
+                    precision={0.5}
+                    readOnly
+                    size="large"
+                  />
+                </RatingStarWrap>
+              </RatingItem>
+            ))
+          ) : (
+            <RatingDate>아직 리뷰가 없습니다.</RatingDate>
+          )}
         </RatingList>
-        <List />
+        {/* <List /> */}
       </MainWrap>
     </Main>
   );
@@ -176,7 +241,7 @@ const RatingDate = styled.div`
 const RatingNameWrap = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
 `;
 
 const RatingStarWrap = styled.div`

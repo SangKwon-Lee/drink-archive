@@ -1,6 +1,6 @@
 'use client';
 import styled from 'styled-components';
-import { Main, MainWrap } from '@commonStyles/styles';
+import { Main, MainWrap } from '@styles/styles';
 
 // components
 import MainBanner from '@components/banner/mainBanner';
