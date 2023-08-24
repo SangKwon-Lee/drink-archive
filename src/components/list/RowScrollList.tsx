@@ -1,8 +1,9 @@
-import { Rating } from '@mui/material';
+import Link from 'next/link';
 import Images from '@utils/images';
-import { toFixedNumber } from '@utils/toFixedNumber';
-import styled from 'styled-components';
 import { BeerListType } from 'type';
+import styled from 'styled-components';
+import { Rating } from '@mui/material';
+import { toFixedNumber } from '@utils/toFixedNumber';
 
 interface Props {
   title: string;
@@ -20,34 +21,36 @@ export default function RowScrollList({ list, title, isRating }: Props) {
         {Array.isArray(list) &&
           list.length > 0 &&
           list.map((data, index) => (
-            <HomeListItem key={index}>
-              <ListImg>
-                <Images
-                  src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
-                  style={{ objectFit: 'cover' }}
-                />
-              </ListImg>
-              <ListContents>
-                <ListNameWrap>
-                  <ListName>{data.attributes.name}</ListName>
-                  <ListType>{data.attributes.type}</ListType>
-                </ListNameWrap>
-                {isRating && (
-                  <>
-                    <RatingWrap>
-                      <Rating
-                        name="read-only"
-                        value={toFixedNumber(data.attributes?.rating)}
-                        precision={0.5}
-                        readOnly
-                      />
-                      <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
-                    </RatingWrap>
-                    <ListType>{data.attributes.people}명이 별점을 남겼어요</ListType>
-                  </>
-                )}
-              </ListContents>
-            </HomeListItem>
+            <Link href={`/beer/${data.id}`} key={data.id}>
+              <HomeListItem key={index}>
+                <ListImg>
+                  <Images
+                    src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
+                    style={{ objectFit: 'cover' }}
+                  />
+                </ListImg>
+                <ListContents>
+                  <ListNameWrap>
+                    <ListName>{data.attributes.name}</ListName>
+                    <ListType>{data.attributes.type}</ListType>
+                  </ListNameWrap>
+                  {isRating && (
+                    <>
+                      <RatingWrap>
+                        <Rating
+                          name="read-only"
+                          value={toFixedNumber(data.attributes?.rating)}
+                          precision={0.5}
+                          readOnly
+                        />
+                        <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
+                      </RatingWrap>
+                      <ListType>{data.attributes.people}명이 별점을 남겼어요</ListType>
+                    </>
+                  )}
+                </ListContents>
+              </HomeListItem>
+            </Link>
           ))}
       </HomeList>
     </>

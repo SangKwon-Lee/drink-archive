@@ -1,15 +1,14 @@
 'use client';
-import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 // components
 import MainBanner from '@components/banner/MainBanner';
+import RowScrollList from '@components/list/RowScrollList';
 
 // utils
 import useAPI from '@api/index';
 import { BeerListType } from 'type';
 import { Main, MainWrap } from '@styles/commonStyles';
-import RowScrollList from '@components/list/RowScrollList';
 
 const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
 export default function HomePage() {

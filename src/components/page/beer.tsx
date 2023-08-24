@@ -8,12 +8,12 @@ import Sort from '@components/sort/Sort';
 import List from '@components/list/List';
 import { Main, MainWrap } from '@styles/commonStyles';
 import MainBanner from '@components/banner/MainBanner';
+import CustomPagination from '@components/pagination/Pagination';
 
 // utils & type
 import useAPI from '@api/index';
 import Images from '@utils/images';
 import { BeerListType } from 'type';
-import CustomPagination from '@components/pagination/Pagination';
 
 const sortArr = [
   {

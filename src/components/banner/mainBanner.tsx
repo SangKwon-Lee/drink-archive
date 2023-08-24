@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import Images from '@utils/images';
+import styled from 'styled-components';
 
 interface MainBannerProps {
   src: string;

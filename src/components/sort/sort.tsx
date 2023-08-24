@@ -1,6 +1,6 @@
-import { Select, MenuItem } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import { Dispatch, SetStateAction } from 'react';
+import { Select, MenuItem } from '@mui/material';
 
 interface SortProps {
   sortArr: {

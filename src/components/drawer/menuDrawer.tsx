@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Images from '@utils/images';
 import { styled } from 'styled-components';
-import { SwipeableDrawer } from '@mui/material';
 import { usePathname } from 'next/navigation';
+import { SwipeableDrawer } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
 
 interface MenuDrawerProps {

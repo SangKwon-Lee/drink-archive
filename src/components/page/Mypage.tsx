@@ -1,9 +1,9 @@
 'use client';
-import { Main } from '@styles/commonStyles';
-import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { styled } from 'styled-components';
 import { UserInfoType } from 'type';
+import { styled } from 'styled-components';
+import { useRouter } from 'next/navigation';
+import { Main } from '@styles/commonStyles';
 
 interface Props {
   userInfo: UserInfoType;

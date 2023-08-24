@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Images from '@utils/images';
-import { BeerRecomendType } from 'type';
 import { Rating } from '@mui/material';
 import styled from 'styled-components';
+import { BeerRecomendType } from 'type';
 import { toFixedNumber } from '@utils/toFixedNumber';
 
 interface Props {
