@@ -97,3 +97,52 @@ export interface BeerDetailType {
     };
   };
 }
+
+export interface BeerRecomendType {
+  id: number;
+  name: string;
+  type: string;
+  company: string;
+  description: string;
+  rating: number;
+  people: number;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
+  thumbnail: {
+    url: string;
+  };
+}
+
+export interface BeerReviewRatingListType {
+  id: number;
+  attributes: {
+    rating: number;
+    createdAt: string;
+    updatedAt: string;
+    publishedAt: string;
+    user: {
+      data: {
+        id: number;
+        attributes: {
+          username: string;
+          email: string;
+          provider: string;
+          confirmed: boolean;
+          blocked: boolean;
+          nickname: string;
+          createdAt: string;
+          updatedAt: string;
+          profile: {
+            data: {
+              id: number;
+              attributes: {
+                url: string;
+              };
+            };
+          };
+        };
+      };
+    };
+  };
+}

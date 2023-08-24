@@ -1,12 +1,11 @@
 'use client';
 import Link from 'next/link';
-import useAPI from '@api/index';
 import Images from '@utils/images';
 import { styled } from 'styled-components';
+import { deleteCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import MenuDrawer from '@components/drawer/menuDrawer';
-import { getCookie, deleteCookie } from 'cookies-next';
 
 const NavArr = [
   {
@@ -33,42 +32,25 @@ const LoginArr = [
     text: 'Signup'
   }
 ];
-export default function Header() {
-  const apiServer = useAPI();
+
+interface Props {
+  isLogin: boolean;
+}
+
+export default function Header({ isLogin }: Props) {
   const pathname = usePathname();
   // * 메뉴 열기
   const [openDrawer, setOpenDrawer] = useState(false);
-  // * 로그인 됐는지
-  const [isLogin, setIsLogin] = useState(false);
-  //* mount 되면 헤더 띄우기
-  const [mount, setMount] = useState(false);
 
   const handleLogout = () => {
     deleteCookie('_ga_t');
-    alert('로그아웃 됐습니다');
     window.location.reload();
   };
 
-  //* 올바른 토큰인지 체크하기
-  const handleCheckToken = async () => {
-    try {
-      await apiServer.get('/users/me');
-      setIsLogin(true);
-    } catch (e) {
-      setIsLogin(false);
+  useEffect(() => {
+    if (!isLogin) {
       deleteCookie('_ga_t');
-      alert('잘못된 접근입니다.');
     }
-  };
-
-  useEffect(() => {
-    if (getCookie('_ga_t')) {
-      handleCheckToken();
-    }
-  }, []);
-
-  useEffect(() => {
-    setMount(true);
   }, []);
 
   return (
@@ -96,31 +78,27 @@ export default function Header() {
             onClick={() => setOpenDrawer(true)}
           />
         </LogoWrap>
-        {mount ? (
-          !isLogin ? (
-            <LoginWrap>
-              {LoginArr.map(({ href, text }, index) => (
-                <NavItemWrap key={href}>
-                  <Link href={href} title={text}>
-                    <NavItem $isPath={pathname === href}>{text}</NavItem>
-                  </Link>
-                  {index !== LoginArr.length - 1 && <NavBorder />}
-                </NavItemWrap>
-              ))}
-            </LoginWrap>
-          ) : (
-            <NavItemWrap>
-              <Link href={'/mypage'} title={'mypage'}>
-                <NavItem $isPath={pathname === '/mypage'}>{'Mypage'}</NavItem>
-              </Link>
-              <NavBorder />
-              <NavItem onClick={handleLogout} style={{ marginLeft: '24px' }}>
-                Logout
-              </NavItem>
-            </NavItemWrap>
-          )
+        {!isLogin ? (
+          <LoginWrap>
+            {LoginArr.map(({ href, text }, index) => (
+              <NavItemWrap key={href}>
+                <Link href={href} title={text}>
+                  <NavItem $isPath={pathname === href}>{text}</NavItem>
+                </Link>
+                {index !== LoginArr.length - 1 && <NavBorder />}
+              </NavItemWrap>
+            ))}
+          </LoginWrap>
         ) : (
-          <></>
+          <NavItemWrap>
+            <Link href={'/mypage'} title={'mypage'}>
+              <NavItem $isPath={pathname === '/mypage'}>{'Mypage'}</NavItem>
+            </Link>
+            <NavBorder />
+            <NavItem onClick={handleLogout} style={{ marginLeft: '24px' }}>
+              Logout
+            </NavItem>
+          </NavItemWrap>
         )}
       </HeaderWrap>
       {/* 모바일에서 열리는 메뉴 */}

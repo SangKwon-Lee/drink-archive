@@ -1,51 +1,46 @@
 import Link from 'next/link';
 import Images from '@utils/images';
-import { BeerListType } from 'type';
+import { BeerRecomendType } from 'type';
 import { Rating } from '@mui/material';
 import styled from 'styled-components';
 import { toFixedNumber } from '@utils/toFixedNumber';
 
 interface Props {
-  list: BeerListType[];
+  list: BeerRecomendType[];
 }
 
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
-export default function List({ list }: Props) {
+export default function RecoList({ list }: Props) {
   return (
     <ListWrap>
-      {Array.isArray(list) && list.length > 0 ? (
+      {Array.isArray(list) &&
+        list.length > 0 &&
         list.map((data) => (
           <Link href={`/beer/${data.id}`} key={data.id}>
             <ListItem>
               <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
-                <Images
-                  style={{ objectFit: 'cover' }}
-                  src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
-                />
+                <Images style={{ objectFit: 'cover' }} src={`${IMG_HOST}${data.thumbnail.url}`} />
               </ListImg>
               <ListContents>
                 <ListNameWrap>
-                  <ListName>{data.attributes.name}</ListName>
-                  <ListType>{data.attributes.type}</ListType>
+                  <ListName>{data.name}</ListName>
+                  <ListType>{data.type}</ListType>
                 </ListNameWrap>
                 <RatingWrap>
                   <Rating
                     name="read-only"
-                    value={toFixedNumber(data.attributes?.rating)}
+                    value={toFixedNumber(data?.rating)}
                     precision={0.5}
                     readOnly
                   />
-                  <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
+                  <RatingNum>{toFixedNumber(data?.rating)}</RatingNum>
                 </RatingWrap>
-                <ListType>{data.attributes.people}명이 별점을 남겼어요</ListType>
+                <ListType>{data.people}명이 별점을 남겼어요</ListType>
               </ListContents>
             </ListItem>
           </Link>
-        ))
-      ) : (
-        <ListName>리스트가 없습니다</ListName>
-      )}
+        ))}
     </ListWrap>
   );
 }

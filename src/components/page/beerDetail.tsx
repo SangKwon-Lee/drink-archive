@@ -1,123 +1,165 @@
 'use client';
 import dayjs from 'dayjs';
 import { styled } from 'styled-components';
+import { useCallback, useEffect, useState } from 'react';
 
 // components
 import { Rating } from '@mui/material';
-import List from '@components/list/list';
 import { Main, MainWrap } from '@styles/styles';
+import RecoList from '@components/list/recoList';
+import ReviewModal from '@components/modal/reviewModal';
 
 // utils
-import Images from '@utils/images';
-import { BeerDetailType } from 'type';
-import { useEffect, useState } from 'react';
 import useAPI from '@api/index';
+import Images from '@utils/images';
 import { toFixedNumber } from '@utils/toFixedNumber';
+import { BeerDetailType, BeerRecomendType, BeerReviewRatingListType } from 'type';
 
 interface Props {
   data: BeerDetailType;
+  userId: number;
 }
 
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
-export default function BeerDetailPage({ data }: Props) {
+export default function BeerDetailPage({ data, userId }: Props) {
   const apiServer = useAPI();
-  const [id, setId] = useState(0);
-  const handleGetMe = async () => {
-    try {
-      const { data } = await apiServer.get(`/users/me`);
-      console.log(data);
-      setId(data.id);
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
-  const handleReviewClick = async () => {
-    if (id === 0) {
-      return alert('로그인을 해주세요 !');
-    }
+  // * 리뷰 모달
+  const [open, setOpen] = useState(false);
+
+  //* 리뷰 리스트
+  const [ratingList, setRatingList] = useState<BeerReviewRatingListType[]>([]);
+
+  // * 하단 추천 리스트
+  const [recomendList, setRecomendList] = useState<BeerRecomendType[]>([]);
+
+  // * 리뷰 클릭
+  const handleReviewClick = async (star: number) => {
     try {
       await apiServer.post(`/beer-rating-give`, {
         beers: data.id,
-        user: id,
-        rating: 5
+        user: userId,
+        rating: star
       });
       alert('리뷰가 등록 됐습니다.');
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
   };
 
-  useEffect(() => {
-    handleGetMe();
+  // * 추천 게시글 리스트
+  const handleGetRecomendList = useCallback(async () => {
+    try {
+      const { data, status } = await apiServer.get<BeerRecomendType[]>(`/beer-reco`);
+      if (status === 200 && Array.isArray(data)) {
+        setRecomendList(data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
+  // * 리뷰 불러오기
+  const handleGetReview = useCallback(async () => {
+    try {
+      const { data, status } = await apiServer.get(
+        `/beer-ratings?populate[user][populate][0]=profile&pagination[pageSize]=10&sort=createdAt:desc`
+      );
+      if (status === 200 && Array.isArray(data.data)) {
+        setRatingList(data.data);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
+  useEffect(() => {
+    handleGetReview();
+    handleGetRecomendList();
+  }, [handleGetRecomendList, handleGetReview]);
+
   return (
-    <Main>
-      <MainWrap>
-        <ProductWrap>
-          <ProductImg>
-            <Images
-              src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
-              style={{ objectFit: 'cover' }}
-            />
-          </ProductImg>
-          <ProductContents>
-            <ProductComp>제조사 / {data.attributes?.company}</ProductComp>
-            <ProductName>{data.attributes?.name}</ProductName>
-            <ProductComp>{data.attributes?.type}</ProductComp>
-            <RatingWrap>
-              <Rating
-                name="read-only"
-                value={toFixedNumber(data.attributes?.rating)}
-                precision={0.5}
-                readOnly
-                size="large"
+    <>
+      <Main>
+        <MainWrap>
+          <ProductWrap>
+            <ProductImg>
+              <Images
+                src={`${IMG_HOST}${data.attributes?.thumbnail.data.attributes.url}`}
+                style={{ objectFit: 'cover' }}
               />
-              <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
-            </RatingWrap>
-            <RatingText>{data.attributes?.people}명이 별점을 남겼어요</RatingText>
-            <ProductDesc>{data.attributes?.description}</ProductDesc>
-            <ReviewBtn onClick={handleReviewClick}>{'별점 남기기'}</ReviewBtn>
-          </ProductContents>
-        </ProductWrap>
-        <RatingList>
-          <RatingSub>최근 10개의 별점만 표시됩니다</RatingSub>
-          {Array.isArray(data.attributes?.beer_ratings?.data) &&
-          data.attributes.beer_ratings?.data.length > 0 ? (
-            data.attributes.beer_ratings?.data.map((rating, index) => (
-              <RatingItem key={index}>
-                <Images
-                  src={`${IMG_HOST}${rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}`}
-                  width={50}
-                  height={50}
-                  circle
+            </ProductImg>
+            <ProductContents>
+              <ProductComp>제조사 / {data.attributes?.company}</ProductComp>
+              <ProductName>{data.attributes?.name}</ProductName>
+              <ProductComp>{data.attributes?.type}</ProductComp>
+              <RatingWrap>
+                <Rating
+                  name="read-only"
+                  value={toFixedNumber(data.attributes?.rating)}
+                  precision={0.5}
+                  readOnly
+                  size="large"
                 />
-                <RatingStarWrap>
-                  <RatingNameWrap>
-                    <RatingName>{rating.attributes.user.data?.attributes.nickname}</RatingName>
-                    <RatingDate>
-                      {dayjs(rating.attributes.updatedAt).format('YYYY-MM-DD')}
-                    </RatingDate>
-                  </RatingNameWrap>
-                  <Rating
-                    name="read-only"
-                    value={rating.attributes.rating}
-                    precision={0.5}
-                    readOnly
-                    size="large"
+                <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
+              </RatingWrap>
+              <RatingText>{data.attributes?.people}명이 별점을 남겼어요</RatingText>
+              <ProductDesc>{data.attributes?.description}</ProductDesc>
+              <ReviewBtn
+                onClick={() => {
+                  if (userId === 0) {
+                    alert('로그인을 해주세요');
+                  } else {
+                    setOpen(true);
+                  }
+                }}
+              >
+                {'별점 남기기'}
+              </ReviewBtn>
+            </ProductContents>
+          </ProductWrap>
+          <RatingList>
+            <RatingSub>최근 10개의 별점만 표시됩니다</RatingSub>
+            {Array.isArray(ratingList) && ratingList.length > 0 ? (
+              ratingList.map((rating, index) => (
+                <RatingItem key={index}>
+                  <Images
+                    src={`${IMG_HOST}${rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}`}
+                    width={50}
+                    height={50}
+                    circle
                   />
-                </RatingStarWrap>
-              </RatingItem>
-            ))
-          ) : (
-            <RatingDate>아직 리뷰가 없습니다.</RatingDate>
-          )}
-        </RatingList>
-        {/* <List /> */}
-      </MainWrap>
-    </Main>
+                  <RatingStarWrap>
+                    <RatingNameWrap>
+                      <RatingName>{rating.attributes.user.data?.attributes.nickname}</RatingName>
+                      <RatingDate>
+                        {dayjs(rating.attributes.updatedAt).format('YYYY-MM-DD HH:mm')}
+                      </RatingDate>
+                    </RatingNameWrap>
+                    <Rating
+                      name="read-only"
+                      value={rating.attributes.rating}
+                      precision={0.5}
+                      readOnly
+                      size="large"
+                    />
+                  </RatingStarWrap>
+                </RatingItem>
+              ))
+            ) : (
+              <RatingDate>아직 리뷰가 없습니다.</RatingDate>
+            )}
+          </RatingList>
+          <RecoTitle>추천 맥주</RecoTitle>
+          <RecoList list={recomendList} />
+        </MainWrap>
+        {open && (
+          <ReviewModal open={open} setOpen={setOpen} handleReviewClick={handleReviewClick} />
+        )}
+      </Main>
+    </>
   );
 }
 
@@ -248,4 +290,10 @@ const RatingStarWrap = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+`;
+
+const RecoTitle = styled.h3`
+  margin: 16px 0px 0px;
+  color: ${({ theme }) => theme.gray.gray20};
+  ${({ theme }) => theme.textSize.S18W700};
 `;

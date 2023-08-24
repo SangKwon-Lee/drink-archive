@@ -3,12 +3,13 @@ import * as yup from 'yup';
 import Link from 'next/link';
 import useAPI from '@api/index';
 import { useState } from 'react';
+import { Main } from '@styles/styles';
 import { SignupShemeType } from 'type';
 import { setCookie } from 'cookies-next';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
-import { Main } from '@styles/styles';
+import { ToastContainer, toast } from 'react-toastify';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -55,8 +56,15 @@ export default function LoginSignupPage() {
           password: data.password.trim()
         });
         if (result.jwt) {
-          setCookie('_ga_t', result.jwt);
-          window.location.href = '/';
+          setCookie('_ga_t', result.jwt, {
+            expires: new Date(new Date().setDate(new Date().getDate() + 3))
+          });
+          toast.success('환영합니다', {
+            autoClose: 1000
+          });
+          setTimeout(() => {
+            window.location.href = '/';
+          }, 1000);
         }
       } else {
         await apiServer.post(`/users`, {
@@ -65,8 +73,12 @@ export default function LoginSignupPage() {
           role: 1,
           profile: 4
         });
-        alert('회원가입을 축하합니다');
-        router.push('/login');
+        toast.success('회원가입을 축하합니다', {
+          autoClose: 1000
+        });
+        setTimeout(() => {
+          router.push('/login');
+        }, 1000);
       }
     } catch (e: AxiosError | unknown) {
       if (axios.isAxiosError(e)) {
@@ -200,4 +212,9 @@ const ErrorMsg = styled.div`
   margin-left: 8px;
   color: ${({ theme }) => theme.palette.orange};
   ${({ theme }) => theme.textSize.S12W400};
+`;
+
+const ToastMsg = styled.div`
+  color: ${({ theme }) => theme.gray.gray10};
+  ${({ theme }) => theme.textSize.S16W400};
 `;

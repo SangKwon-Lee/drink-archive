@@ -1,3 +1,7 @@
 export const toFixedNumber = (number: number) => {
-  return Number(number.toFixed(2));
+  if (number) {
+    return Number(number.toFixed(2));
+  } else {
+    return 0;
+  }
 };

@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Images from '@utils/images';
 import { styled } from 'styled-components';
 import { SwipeableDrawer } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
 import { usePathname } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 interface MenuDrawerProps {
   open: boolean;
@@ -51,7 +51,7 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
         </DrawerLogoWrap>
         <NavWrap>
           {NavArr.map(({ href, text, icon }) => (
-            <LinkStyle href={href} title={text} key={href}>
+            <LinkStyle href={href} title={text} key={href} onClick={() => setOpen(false)}>
               <Images src={icon} width={24} height={24} />
               <NavItem $isPath={pathname === href}>{text}</NavItem>
             </LinkStyle>
