@@ -146,3 +146,9 @@ export interface BeerReviewRatingListType {
     };
   };
 }
+
+export interface UserInfoType {
+  id: number;
+  username: string;
+  nickname: string;
+}

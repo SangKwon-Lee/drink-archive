@@ -1,18 +1,19 @@
 'use client';
-import dayjs from 'dayjs';
+import Images from '@utils/images';
+import { toast } from 'react-toastify';
 import { styled } from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 
 // components
 import { Rating } from '@mui/material';
-import { Main, MainWrap } from '@styles/styles';
-import RecoList from '@components/list/recoList';
-import ReviewModal from '@components/modal/reviewModal';
+import RecoList from '@components/list/RecoList';
+import ReviewModal from '@components/modal/ReviewModal';
+import RatingReviewList from '@components/list/RatingReviewList';
 
 // utils
 import useAPI from '@api/index';
-import Images from '@utils/images';
 import { toFixedNumber } from '@utils/toFixedNumber';
+import { Main, MainWrap } from '@styles/commonStyles';
 import { BeerDetailType, BeerRecomendType, BeerReviewRatingListType } from 'type';
 
 interface Props {
@@ -34,6 +35,18 @@ export default function BeerDetailPage({ data, userId }: Props) {
   // * 하단 추천 리스트
   const [recomendList, setRecomendList] = useState<BeerRecomendType[]>([]);
 
+  //* 리뷰 클릭 전 Login 체크
+  const handleLoginCheck = () => {
+    if (userId === 0) {
+      toast.error('로그인을 해주세요.', {
+        toastId: 0,
+        autoClose: 2000
+      });
+    } else {
+      setOpen(true);
+    }
+  };
+
   // * 리뷰 클릭
   const handleReviewClick = async (star: number) => {
     try {
@@ -42,7 +55,10 @@ export default function BeerDetailPage({ data, userId }: Props) {
         user: userId,
         rating: star
       });
-      alert('리뷰가 등록 됐습니다.');
+      toast.success('리뷰가 등록 됐습니다.', {
+        toastId: 0,
+        autoClose: 2000
+      });
       window.location.reload();
     } catch (e) {
       console.log(e);
@@ -107,51 +123,10 @@ export default function BeerDetailPage({ data, userId }: Props) {
               </RatingWrap>
               <RatingText>{data.attributes?.people}명이 별점을 남겼어요</RatingText>
               <ProductDesc>{data.attributes?.description}</ProductDesc>
-              <ReviewBtn
-                onClick={() => {
-                  if (userId === 0) {
-                    alert('로그인을 해주세요');
-                  } else {
-                    setOpen(true);
-                  }
-                }}
-              >
-                {'별점 남기기'}
-              </ReviewBtn>
+              <ReviewBtn onClick={handleLoginCheck}>{'별점 남기기'}</ReviewBtn>
             </ProductContents>
           </ProductWrap>
-          <RatingList>
-            <RatingSub>최근 10개의 별점만 표시됩니다</RatingSub>
-            {Array.isArray(ratingList) && ratingList.length > 0 ? (
-              ratingList.map((rating, index) => (
-                <RatingItem key={index}>
-                  <Images
-                    src={`${IMG_HOST}${rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}`}
-                    width={50}
-                    height={50}
-                    circle
-                  />
-                  <RatingStarWrap>
-                    <RatingNameWrap>
-                      <RatingName>{rating.attributes.user.data?.attributes.nickname}</RatingName>
-                      <RatingDate>
-                        {dayjs(rating.attributes.updatedAt).format('YYYY-MM-DD HH:mm')}
-                      </RatingDate>
-                    </RatingNameWrap>
-                    <Rating
-                      name="read-only"
-                      value={rating.attributes.rating}
-                      precision={0.5}
-                      readOnly
-                      size="large"
-                    />
-                  </RatingStarWrap>
-                </RatingItem>
-              ))
-            ) : (
-              <RatingDate>아직 리뷰가 없습니다.</RatingDate>
-            )}
-          </RatingList>
+          <RatingReviewList ratingList={ratingList} />
           <RecoTitle>추천 맥주</RecoTitle>
           <RecoList list={recomendList} />
         </MainWrap>
@@ -249,51 +224,8 @@ const ReviewBtn = styled.button`
   }
 `;
 
-const RatingSub = styled.div`
-  color: ${({ theme }) => theme.gray.gray30};
-  ${({ theme }) => theme.textSize.S14W400};
-`;
-
-const RatingList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  border-top: 1px solid ${({ theme }) => theme.gray.gray80};
-  border-bottom: 1px solid ${({ theme }) => theme.gray.gray80};
-  gap: 24px;
-`;
-
-const RatingItem = styled.li`
-  display: flex;
-  gap: 16px;
-`;
-
-const RatingName = styled.div`
-  ${({ theme }) => theme.textSize.S16W700};
-`;
-
-const RatingDate = styled.div`
-  padding-top: 2px;
-  color: ${({ theme }) => theme.gray.gray40};
-  ${({ theme }) => theme.textSize.S14W400};
-`;
-
-const RatingNameWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const RatingStarWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
 const RecoTitle = styled.h3`
-  margin: 16px 0px 0px;
+  margin: 16px 0 0;
   color: ${({ theme }) => theme.gray.gray20};
   ${({ theme }) => theme.textSize.S18W700};
 `;

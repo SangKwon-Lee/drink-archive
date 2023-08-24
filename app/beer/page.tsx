@@ -1,4 +1,4 @@
-import BeerPage from '@components/page/beer';
+import BeerPage from '@components/page/Beer';
 
 export default function Beer() {
   return (

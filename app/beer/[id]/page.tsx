@@ -1,5 +1,5 @@
 import axios from 'axios';
-import BeerDetailPage from '@components/page/beerDetail';
+import BeerDetailPage from '@components/page/BeerDetail';
 import { cookies } from 'next/dist/client/components/headers';
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;

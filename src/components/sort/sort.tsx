@@ -39,6 +39,13 @@ const CustomMenuItem = styled(MenuItem)`
   ${({ theme }) => theme.textSize.S14W400};
 `;
 
+const SortTitle = styled.div`
+  display: flex;
+  align-items: center;
+  ${({ theme }) => theme.textSize.S14W400};
+  color: ${({ theme }) => theme.gray.gray40};
+`;
+
 export default function Sort({ sort, setSort, sortArr, title }: SortProps) {
   return (
     <SortTitle>
@@ -55,10 +62,3 @@ export default function Sort({ sort, setSort, sortArr, title }: SortProps) {
     </SortTitle>
   );
 }
-
-const SortTitle = styled.div`
-  display: flex;
-  align-items: center;
-  ${({ theme }) => theme.textSize.S14W400};
-  color: ${({ theme }) => theme.gray.gray40};
-`;

@@ -82,9 +82,11 @@ const DrawerLogo = styled.nav`
   &:hover {
     color: ${({ theme }) => theme.palette.orange};
   }
+
   &:visited {
     color: ${({ theme }) => theme.gray.gray10};
   }
+
   transition: all 0.2s;
 `;
 

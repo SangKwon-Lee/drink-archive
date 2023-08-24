@@ -8,10 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import StyledComponentsRegistry from '@styles/registry';
 
 // components
-import Header from '@components/layout/header';
-import Footer from '@components/layout/footer';
-import Nprogress from '@components/commons/nprogress';
-import ToastContainer from '@components/modal/toast';
+import Header from '@components/layout/Header';
+import Footer from '@components/layout/Footer';
+import Nprogress from '@components/commons/Nprogress';
+import ToastContainer from '@components/modal/Toast';
 const roboto = Roboto({
   weight: '400',
   subsets: ['latin'],
@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   title: 'Drink Archive',
   description: 'Drink Archive'
 };
+
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
 async function getUserId() {

@@ -5,7 +5,7 @@ import { styled } from 'styled-components';
 import { deleteCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import MenuDrawer from '@components/drawer/menuDrawer';
+import MenuDrawer from '@components/drawer/MenuDrawer';
 
 const NavArr = [
   {

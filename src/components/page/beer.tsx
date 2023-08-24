@@ -4,10 +4,10 @@ import { styled } from 'styled-components';
 import { useEffect, useMemo, useState } from 'react';
 
 // components
-import Sort from '@components/sort/sort';
-import List from '@components/list/list';
-import { Main, MainWrap } from '@styles/styles';
-import MainBanner from '@components/banner/mainBanner';
+import Sort from '@components/sort/Sort';
+import List from '@components/list/List';
+import { Main, MainWrap } from '@styles/commonStyles';
+import MainBanner from '@components/banner/MainBanner';
 
 // utils & type
 import useAPI from '@api/index';

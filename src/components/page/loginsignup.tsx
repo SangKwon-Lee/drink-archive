@@ -3,13 +3,13 @@ import * as yup from 'yup';
 import Link from 'next/link';
 import useAPI from '@api/index';
 import { useState } from 'react';
-import { Main } from '@styles/styles';
+import { toast } from 'react-toastify';
 import { SignupShemeType } from 'type';
 import { setCookie } from 'cookies-next';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
-import { ToastContainer, toast } from 'react-toastify';
+import { Main } from '@styles/commonStyles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -57,10 +57,11 @@ export default function LoginSignupPage() {
         });
         if (result.jwt) {
           setCookie('_ga_t', result.jwt, {
-            expires: new Date(new Date().setDate(new Date().getDate() + 3))
+            expires: new Date(new Date().setDate(new Date().getDate() + 30))
           });
           toast.success('환영합니다', {
-            autoClose: 1000
+            autoClose: 1000,
+            hideProgressBar: true
           });
           setTimeout(() => {
             window.location.href = '/';
@@ -74,7 +75,8 @@ export default function LoginSignupPage() {
           profile: 4
         });
         toast.success('회원가입을 축하합니다', {
-          autoClose: 1000
+          autoClose: 1000,
+          hideProgressBar: true
         });
         setTimeout(() => {
           router.push('/login');

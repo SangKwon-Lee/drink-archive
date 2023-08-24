@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+// * 레이아웃
+
 export const Main = styled.main`
   display: flex;
   flex-direction: column;

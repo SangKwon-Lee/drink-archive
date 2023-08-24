@@ -13,12 +13,15 @@ const CustomPaginationStyle = styled(Pagination)`
     color: ${({ theme }) => theme.gray.gray40};
     ${({ theme }) => theme.textSize.S14W400};
   }
+
   .Mui-selected {
     color: white;
     background-color: ${({ theme }) => theme.palette.orange};
+
     &:hover {
       background-color: ${({ theme }) => theme.palette.orange};
     }
+
     &:active {
       background-color: ${({ theme }) => theme.palette.orange};
     }
