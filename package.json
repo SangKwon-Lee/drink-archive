@@ -45,7 +45,6 @@
     "postcss-styled-syntax": "^0.4.0",
     "prettier": "^3.0.1",
     "stylelint": "^15.10.2",
-    "stylelint-config-recommended": "^13.0.0",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^6.0.3",

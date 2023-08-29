@@ -164,7 +164,6 @@ const NavItemWrap = styled.div`
   align-items: center;
   text-transform: none;
 `;
-
 const NavBorder = styled.div`
   border-right: 1px solid ${({ theme }) => theme.gray.gray80};
   height: 12px;
