@@ -166,8 +166,8 @@ const Search = styled.input`
   width: 85%;
   padding: 15px 0;
   border: none;
-  border-radius: 24px;
   outline: none;
+  border-radius: 24px;
   background-color: transparent;
   ${({ theme }) => theme.textSize.S16W400};
 `;
