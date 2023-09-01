@@ -76,18 +76,17 @@ const DrawerLogoWrap = styled.div`
 `;
 
 const DrawerLogo = styled.nav`
-  ${({ theme }) => theme.textSize.S20W700};
+  transition: all 0.2s;
   text-decoration: none;
-
+  
+  ${({ theme }) => theme.textSize.S20W700};
   &:hover {
     color: ${({ theme }) => theme.palette.orange};
   }
-
+  
   &:visited {
     color: ${({ theme }) => theme.gray.gray10};
   }
-
-  transition: all 0.2s;
 `;
 
 const NavWrap = styled.aside`
@@ -97,12 +96,11 @@ const NavWrap = styled.aside`
 `;
 
 const NavItem = styled.nav<{ $isPath?: boolean }>`
+  transition: all 0.2s;
   color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
 
   ${({ theme }) => theme.textSize.S20W700};
   &:hover {
     color: ${({ theme }) => theme.palette.orange};
   }
-
-  transition: all 0.2s;
 `;

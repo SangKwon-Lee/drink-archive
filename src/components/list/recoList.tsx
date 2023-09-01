@@ -36,7 +36,7 @@ export default function RecoList({ list }: Props) {
                   />
                   <RatingNum>{toFixedNumber(data?.rating)}</RatingNum>
                 </RatingWrap>
-                <ListType>{data.people}명이 별점을 남겼어요</ListType>
+                <ListType>{data.people ? data.people : 0}명이 별점을 남겼어요</ListType>
               </ListContents>
             </ListItem>
           </Link>
@@ -47,10 +47,9 @@ export default function RecoList({ list }: Props) {
 
 const ListWrap = styled.ul`
   display: inline-grid;
-  margin-top: 24px;
-  gap: 16px;
-  flex-wrap: wrap;
   grid-template-columns: repeat(4, 1fr);
+  flex-wrap: wrap;
+  gap: 16px;
 
   @media (width <= 1100px) {
     grid-template-columns: repeat(3, 1fr);
@@ -66,9 +65,9 @@ const ListWrap = styled.ul`
 `;
 
 const ListItem = styled.li`
+  transition: all 0.5s;
   background-color: white;
   cursor: pointer;
-  transition: all 0.5s;
 
   &:active {
     opacity: 0.8;
@@ -85,10 +84,10 @@ const ListItem = styled.li`
 `;
 
 const ListImg = styled.div`
-  overflow: hidden;
   position: relative;
   width: 100%;
   height: 300px;
+  overflow: hidden;
   background-color: white;
 `;
 

@@ -15,6 +15,7 @@ import useAPI from '@api/index';
 import { toFixedNumber } from '@utils/toFixedNumber';
 import { Main, MainWrap } from '@styles/commonStyles';
 import { BeerDetailType, BeerRecomendType, BeerReviewRatingListType } from 'type';
+import Review from '@components/card/Review';
 
 interface Props {
   data: BeerDetailType;
@@ -24,6 +25,7 @@ interface Props {
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 export default function BeerDetailPage({ data, userId }: Props) {
+  console.log(userId);
   const apiServer = useAPI();
 
   // * 리뷰 모달
@@ -32,6 +34,14 @@ export default function BeerDetailPage({ data, userId }: Props) {
   //* 리뷰 리스트
   const [ratingList, setRatingList] = useState<BeerReviewRatingListType[]>([]);
 
+  //* 나의 리뷰
+  const [myReview, setMyReview] = useState({
+    id: 0,
+    rating: 0,
+    updatedAt: '',
+    profile: '',
+    nickname: ''
+  });
   // * 하단 추천 리스트
   const [recomendList, setRecomendList] = useState<BeerRecomendType[]>([]);
 
@@ -40,7 +50,7 @@ export default function BeerDetailPage({ data, userId }: Props) {
     if (userId === 0) {
       toast.error('로그인을 해주세요.', {
         toastId: 0,
-        autoClose: 2000
+        autoClose: 1500
       });
     } else {
       setOpen(true);
@@ -50,18 +60,34 @@ export default function BeerDetailPage({ data, userId }: Props) {
   // * 리뷰 클릭
   const handleReviewClick = async (star: number) => {
     try {
-      await apiServer.post(`/beer-rating-give`, {
-        beers: data.id,
-        user: userId,
-        rating: star
-      });
-      toast.success('리뷰가 등록 됐습니다.', {
-        toastId: 0,
-        autoClose: 2000
-      });
-      window.location.reload();
+      if (myReview.id === 0) {
+        await apiServer.post(`/beer-rating-give`, {
+          beers: data.id,
+          user: userId,
+          rating: star
+        });
+        toast.success('리뷰가 등록 됐습니다.', {
+          toastId: 0,
+          autoClose: 1500
+        });
+      } else {
+        await apiServer.put(`/beer-rating-give-update`, {
+          beers: data.id,
+          user: userId,
+          rating: star,
+          ratingId: myReview.id
+        });
+        toast.success('리뷰가 수정 됐습니다.', {
+          toastId: 0,
+          autoClose: 1500
+        });
+      }
+      handleGetReview();
+      handleMyReview();
     } catch (e) {
       console.log(e);
+    } finally {
+      setOpen(false);
     }
   };
 
@@ -91,10 +117,29 @@ export default function BeerDetailPage({ data, userId }: Props) {
     }
   }, []);
 
+  //* 나의 리뷰 불러오기
+  const handleMyReview = async () => {
+    try {
+      const { data: result, status } = await apiServer.get(`/beer-my-rating/${userId}/${data.id}`);
+      console.log(result);
+      if (status === 200) {
+        setMyReview(result);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     handleGetReview();
     handleGetRecomendList();
   }, [handleGetRecomendList, handleGetReview]);
+
+  useEffect(() => {
+    if (userId) {
+      handleMyReview();
+    }
+  }, []);
 
   return (
     <>
@@ -121,11 +166,28 @@ export default function BeerDetailPage({ data, userId }: Props) {
                 />
                 <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
               </RatingWrap>
-              <RatingText>{data.attributes?.people}명이 별점을 남겼어요</RatingText>
+              <RatingText>
+                {data.attributes?.people ? data.attributes.people : 0}명이 별점을 남겼어요
+              </RatingText>
               <ProductDesc>{data.attributes?.description}</ProductDesc>
-              <ReviewBtn onClick={handleLoginCheck}>{'별점 남기기'}</ReviewBtn>
+              <ReviewBtn onClick={handleLoginCheck}>
+                {myReview.id === 0 ? '별점 남기기' : '별점 수정하기'}
+              </ReviewBtn>
             </ProductContents>
           </ProductWrap>
+          <MyReviewWrap>
+            <RecoTitle>내가 남긴 별점</RecoTitle>
+            {myReview.id !== 0 ? (
+              <Review
+                date={myReview.updatedAt}
+                nickname={myReview.nickname}
+                rating={myReview.rating}
+                profile={myReview.profile}
+              />
+            ) : (
+              <RatingText>아직 별점을 남기지 않으셨어요.</RatingText>
+            )}
+          </MyReviewWrap>
           <RatingReviewList ratingList={ratingList} />
           <RecoTitle>추천 맥주</RecoTitle>
           <RecoList list={recomendList} />
@@ -138,12 +200,12 @@ export default function BeerDetailPage({ data, userId }: Props) {
   );
 }
 
-const ProductWrap = styled.div`
+const ProductWrap = styled.section`
   display: flex;
   justify-content: space-between;
   margin-top: 60px;
   gap: 48px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 
   @media ${({ theme }) => theme.media.mobile} {
     flex-direction: column;
@@ -153,8 +215,8 @@ const ProductWrap = styled.div`
 
 const ProductImg = styled.div`
   display: flex;
-  flex: 1;
   position: relative;
+  flex: 1;
   height: 0;
   padding-bottom: 46.7%;
 
@@ -165,8 +227,8 @@ const ProductImg = styled.div`
 
 const ProductContents = styled.div`
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
 `;
 
 const ProductComp = styled.div`
@@ -206,26 +268,32 @@ const ProductDesc = styled.div`
 const ReviewBtn = styled.button`
   margin-top: auto;
   padding: 16px 36px;
+  transition: all 0.3s;
   border: 1px solid ${({ theme }) => theme.palette.orange};
   border-radius: 24px;
-  transition: all 0.3s;
-  color: ${({ theme }) => theme.palette.orange};
   background-color: white;
+  color: ${({ theme }) => theme.palette.orange};
+
   ${({ theme }) => theme.textSize.S16W700};
 
   &:hover {
-    color: white;
     background-color: ${({ theme }) => theme.palette.orange};
+    color: white;
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.palette.orange};
     opacity: 0.5;
+    background-color: ${({ theme }) => theme.palette.orange};
   }
 `;
 
 const RecoTitle = styled.h3`
-  margin: 16px 0 0;
+  margin: 16px 0;
   color: ${({ theme }) => theme.gray.gray20};
   ${({ theme }) => theme.textSize.S18W700};
+`;
+
+const MyReviewWrap = styled.aside`
+  padding-bottom: 16px;
+  border-top: 1px solid ${({ theme }) => theme.gray.gray80};
 `;

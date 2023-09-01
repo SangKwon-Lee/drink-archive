@@ -1,13 +1,10 @@
-import dayjs from 'dayjs';
-import Images from '@utils/images';
-import { Rating } from '@mui/material';
 import styled from 'styled-components';
 import { BeerReviewRatingListType } from 'type';
+import Review from '@components/card/Review';
 
 interface Props {
   ratingList: BeerReviewRatingListType[];
 }
-const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 export default function RatingReviewList({ ratingList }: Props) {
   return (
@@ -16,27 +13,12 @@ export default function RatingReviewList({ ratingList }: Props) {
       {Array.isArray(ratingList) && ratingList.length > 0 ? (
         ratingList.map((rating, index) => (
           <RatingItem key={index}>
-            <Images
-              src={`${IMG_HOST}${rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}`}
-              width={50}
-              height={50}
-              circle
+            <Review
+              rating={rating.attributes.rating}
+              date={rating.attributes.updatedAt}
+              nickname={rating.attributes.user.data?.attributes.nickname}
+              profile={rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}
             />
-            <RatingStarWrap>
-              <RatingNameWrap>
-                <RatingName>{rating.attributes.user.data?.attributes.nickname}</RatingName>
-                <RatingDate>
-                  {dayjs(rating.attributes.updatedAt).format('YYYY-MM-DD HH:mm')}
-                </RatingDate>
-              </RatingNameWrap>
-              <Rating
-                name="read-only"
-                value={rating.attributes.rating}
-                precision={0.5}
-                readOnly
-                size="large"
-              />
-            </RatingStarWrap>
           </RatingItem>
         ))
       ) : (
@@ -62,35 +44,10 @@ const RatingList = styled.ul`
   gap: 24px;
 `;
 
-const RatingItem = styled.li`
-  display: flex;
-  gap: 16px;
-`;
-
-const RatingName = styled.div`
-  ${({ theme }) => theme.textSize.S16W700};
-`;
+const RatingItem = styled.li``;
 
 const RatingDate = styled.div`
   padding-top: 2px;
   color: ${({ theme }) => theme.gray.gray40};
   ${({ theme }) => theme.textSize.S14W400};
-`;
-
-const RatingNameWrap = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-const RatingStarWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const RecoTitle = styled.h3`
-  margin: 16px 0 0;
-  color: ${({ theme }) => theme.gray.gray20};
-  ${({ theme }) => theme.textSize.S18W700};
 `;

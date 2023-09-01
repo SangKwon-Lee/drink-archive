@@ -17,9 +17,9 @@ export default function MainBanner({ src, title }: MainBannerProps) {
 
 const Banner = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
-  position: relative;
   width: 100%;
   height: 300px;
 `;

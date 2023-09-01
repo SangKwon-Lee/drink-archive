@@ -59,20 +59,14 @@ export default function LoginSignupPage() {
           setCookie('_ga_t', result.jwt, {
             expires: new Date(new Date().setDate(new Date().getDate() + 30))
           });
-          toast.success('환영합니다', {
-            autoClose: 1000,
-            hideProgressBar: true
-          });
-          setTimeout(() => {
-            window.location.href = '/';
-          }, 1000);
+          window.location.href = '/';
         }
       } else {
         await apiServer.post(`/users`, {
           ...data,
           email: `${data.nickname}@drink.com`,
           role: 1,
-          profile: 4
+          profile: 2
         });
         toast.success('회원가입을 축하합니다', {
           autoClose: 1000,
@@ -144,20 +138,20 @@ export default function LoginSignupPage() {
 }
 
 const Logo = styled.div`
-  ${({ theme }) => theme.textSize.S32W700};
   margin-bottom: 24px;
+  ${({ theme }) => theme.textSize.S32W700};
 `;
 
 const LoginCard = styled.form`
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 400px;
   padding: 40px 24px;
   border-radius: 36px;
   background-color: white;
-  max-width: 400px;
-  gap: 24px;
   box-shadow: ${({ theme }) => `2px 3px 10px ${theme.shadow}`};
+  gap: 24px;
 `;
 
 const BtnWrap = styled.div`
@@ -168,41 +162,42 @@ const BtnWrap = styled.div`
 
 const TextInput = styled.input`
   padding: 16px;
-  ${({ theme }) => theme.textSize.S14W400};
   border: none;
   border-radius: 24px;
-  color: ${({ theme }) => theme.gray.gray10};
   background-color: ${({ theme }) => theme.gray.gray90};
+  color: ${({ theme }) => theme.gray.gray10};
+
+  ${({ theme }) => theme.textSize.S14W400};
 `;
 
 const Btn = styled.button`
   flex: 1;
   padding: 16px 36px;
-  ${({ theme }) => theme.textSize.S16W700};
+  transition: all 0.3s;
   border: 1px solid ${({ theme }) => theme.palette.orange};
   border-radius: 24px;
-  transition: all 0.3s;
-  color: ${({ theme }) => theme.palette.orange};
   background-color: white;
+  color: ${({ theme }) => theme.palette.orange};
 
+  ${({ theme }) => theme.textSize.S16W700};
   &:hover {
-    color: white;
     background-color: ${({ theme }) => theme.palette.orange};
+    color: white;
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.palette.orange};
     opacity: 0.5;
+    background-color: ${({ theme }) => theme.palette.orange};
   }
 `;
 
 const GoSignup = styled.div`
-  cursor: pointer;
   margin-top: 16px;
-  ${({ theme }) => theme.textSize.S14W400};
   border-bottom: 1px solid ${({ theme }) => theme.gray.gray70};
   color: ${({ theme }) => theme.gray.gray50};
+  cursor: pointer;
 
+  ${({ theme }) => theme.textSize.S14W400};
   &:active {
     opacity: 0.5;
   }

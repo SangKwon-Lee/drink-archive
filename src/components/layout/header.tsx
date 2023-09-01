@@ -109,10 +109,10 @@ export default function Header({ isLogin }: Props) {
 
 export const HeaderLayout = styled.div<{ $path: string }>`
   display: flex;
-  justify-content: center;
   position: sticky;
-  top: 0;
   z-index: 1;
+  top: 0;
+  justify-content: center;
   width: 100%;
   height: 60px;
   padding: 0 24px;
@@ -134,8 +134,8 @@ const LogoWrap = styled.div`
 
 const Logo = styled.h1`
   margin-right: 32px;
-  cursor: pointer;
   color: ${({ theme }) => theme.gray.gray20};
+  cursor: pointer;
 
   ${({ theme }) => theme.textSize.S28W700};
   @media ${({ theme }) => theme.media.mobile} {
@@ -165,16 +165,16 @@ const NavItemWrap = styled.div`
   text-transform: none;
 `;
 const NavBorder = styled.div`
-  border-right: 1px solid ${({ theme }) => theme.gray.gray80};
   height: 12px;
   margin-left: 24px;
+  border-right: 1px solid ${({ theme }) => theme.gray.gray80};
 `;
 
 const NavItem = styled.nav<{ $isPath?: boolean }>`
-  color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
-  ${({ $isPath, theme }) => ($isPath ? theme.textSize.S18W700 : theme.textSize.S18W400)};
-  cursor: pointer;
   transition: all 0.2s;
+  color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
+  cursor: pointer;
+  ${({ $isPath, theme }) => ($isPath ? theme.textSize.S18W700 : theme.textSize.S18W400)};
 
   &:hover {
     color: ${({ theme }) => theme.palette.orange};

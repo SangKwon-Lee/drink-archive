@@ -38,7 +38,7 @@ export default function List({ list }: Props) {
                   />
                   <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
                 </RatingWrap>
-                <ListType>{data.attributes.people}명이 별점을 남겼어요</ListType>
+                <ListType>{data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요</ListType>
               </ListContents>
             </ListItem>
           </Link>
@@ -52,10 +52,10 @@ export default function List({ list }: Props) {
 
 const ListWrap = styled.ul`
   display: inline-grid;
+  grid-template-columns: repeat(4, 1fr);
+  flex-wrap: wrap;
   margin-top: 24px;
   gap: 16px;
-  flex-wrap: wrap;
-  grid-template-columns: repeat(4, 1fr);
 
   @media (width <= 1100px) {
     grid-template-columns: repeat(3, 1fr);
@@ -71,9 +71,9 @@ const ListWrap = styled.ul`
 `;
 
 const ListItem = styled.li`
+  transition: all 0.5s;
   background-color: white;
   cursor: pointer;
-  transition: all 0.5s;
 
   &:active {
     opacity: 0.8;
@@ -90,15 +90,15 @@ const ListItem = styled.li`
 `;
 
 const ListImg = styled.div`
-  overflow: hidden;
   position: relative;
   width: 100%;
   height: 300px;
+  overflow: hidden;
   background-color: white;
 `;
 
 const ListContents = styled.div`
-  display: flex;
+display: flex;
   flex-direction: column;
   padding: 16px;
   gap: 4px;

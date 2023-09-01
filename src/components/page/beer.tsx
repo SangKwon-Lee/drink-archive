@@ -156,18 +156,18 @@ const SearchWrap = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  max-width: 500px;
   padding: 0 16px;
   border-radius: 24px;
   background-color: white;
-  max-width: 500px;
 `;
 
 const Search = styled.input`
   width: 85%;
   padding: 15px 0;
   border: none;
-  outline: none;
   border-radius: 24px;
+  outline: none;
   background-color: transparent;
   ${({ theme }) => theme.textSize.S16W400};
 `;

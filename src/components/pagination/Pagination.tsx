@@ -15,8 +15,8 @@ const CustomPaginationStyle = styled(Pagination)`
   }
 
   .Mui-selected {
-    color: white;
     background-color: ${({ theme }) => theme.palette.orange};
+    color: white;
 
     &:hover {
       background-color: ${({ theme }) => theme.palette.orange};

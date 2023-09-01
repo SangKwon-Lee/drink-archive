@@ -42,13 +42,15 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "postcss": "^8.4.29",
     "postcss-styled-syntax": "^0.4.0",
     "prettier": "^3.0.1",
     "stylelint": "^15.10.2",
+    "stylelint-order": "^6.0.3",
+    "stylelint-config-property-sort-order-smacss": "^9.1.0",
+    "stylelint-prettier": "^4.0.2",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-order": "^6.0.3",
-    "stylelint-prettier": "^4.0.2",
     "stylelint-processor-styled-components": "^1.10.0"
   }
 }

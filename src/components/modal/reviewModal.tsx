@@ -24,7 +24,7 @@ interface Props {
 
 export default function ReviewModal({ open, setOpen, handleReviewClick }: Props) {
   const handleClose = () => setOpen(false);
-  const [star, setStar] = useState(5);
+  const [star, setStar] = useState(1);
   return (
     <Modal open={open} onClose={handleClose}>
       <Box sx={style}>
@@ -60,39 +60,39 @@ const BtnWrap = styled.div`
 const BtnCancel = styled.button`
   width: 100%;
   padding: 8px;
+  transition: all 0.3s;
   border: 1px solid ${({ theme }) => theme.gray.gray10};
   border-radius: 24px;
-  transition: all 0.3s;
-  color: ${({ theme }) => theme.gray.gray10};
   background-color: white;
+  color: ${({ theme }) => theme.gray.gray10};
 
   &:hover {
-    color: white;
     background-color: ${({ theme }) => theme.gray.gray10};
+    color: white;
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.gray.gray10};
     opacity: 0.5;
+    background-color: ${({ theme }) => theme.gray.gray10};
   }
 `;
 
 const BtnOK = styled.button`
   width: 100%;
   padding: 8px;
+  transition: all 0.3s;
   border: 1px solid ${({ theme }) => theme.palette.orange};
   border-radius: 24px;
-  transition: all 0.3s;
-  color: ${({ theme }) => theme.palette.orange};
   background-color: white;
+  color: ${({ theme }) => theme.palette.orange};
 
   &:hover {
-    color: white;
     background-color: ${({ theme }) => theme.palette.orange};
+    color: white;
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.palette.orange};
     opacity: 0.5;
+    background-color: ${({ theme }) => theme.palette.orange};
   }
 `;
