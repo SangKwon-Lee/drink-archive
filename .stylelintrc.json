@@ -21,6 +21,7 @@
     "no-descending-specificity": null,
     "media-query-no-invalid":null,
     "selector-class-pattern":null,
+    "value-no-vendor-prefix":null,
     "at-rule-no-unknown": [
       true,
       {
