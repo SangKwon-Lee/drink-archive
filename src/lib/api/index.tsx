@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { getCookie } from 'cookies-next';
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const defaultOptions = {
-  baseURL: 'http://localhost:1337/api'
+  baseURL: API_HOST
 };
 export default function useAPI() {
   const instance = axios.create(defaultOptions);
