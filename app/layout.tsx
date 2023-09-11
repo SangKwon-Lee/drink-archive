@@ -2,7 +2,6 @@ import axios from 'axios';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { Roboto } from 'next/font/google';
-import { headers } from 'next/headers';
 // styles
 import Providers from '@styles/providers';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,27 +19,21 @@ const roboto = Roboto({
 });
 
 // ts-prune-ignore-next
-// export const metadata: Metadata =
-export async function generateMetadata(params: any): Promise<Metadata> {
-  const headersList = headers();
-  const pathname = headersList.get('x-invoke-path') || '';
-  const newPathname = pathname.replace('/', '');
-  return {
-    title: `Drink Archive | ${newPathname}`,
+export const metadata: Metadata = {
+  title: 'Drink Archive',
+  description: 'Drink Archive 주류 후기',
+  openGraph: {
+    title: 'Drink Archive',
     description: 'Drink Archive 주류 후기',
-    openGraph: {
-      title: `Drink Archive | ${newPathname}`,
-      description: 'Drink Archive 주류 후기',
-      url: 'https://drink-archive.vercel.app',
-      siteName: 'Drink Archive',
-      images: '/icon/icon_favicon.png',
-      type: 'website'
-    },
-    icons: '/icon/icon_favicon.png',
-    robots: 'all',
-    keywords: 'Drink Archive, 주류, 후기, 맥주, 와인, 양주, 위스키, 맥주 후기'
-  };
-}
+    url: 'https://drink-archive.vercel.app',
+    siteName: 'Drink Archive',
+    images: '/icon/icon_favicon.png',
+    type: 'website'
+  },
+  icons: '/icon/icon_favicon.png',
+  robots: 'all',
+  keywords: 'Drink Archive, 주류, 후기, 맥주, 와인, 양주, 위스키, 맥주 후기'
+};
 
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 
