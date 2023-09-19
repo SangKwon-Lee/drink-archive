@@ -1,7 +1,7 @@
 'use client';
 import { useEffect } from 'react';
 import { UserInfoType } from 'type';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import { Main } from '@styles/commonStyles';
 

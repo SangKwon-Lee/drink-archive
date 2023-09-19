@@ -45,7 +45,9 @@ export default function RowScrollList({ list, title, isRating }: Props) {
                         />
                         <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
                       </RatingWrap>
-                      <ListType>{data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요</ListType>
+                      <ListType>
+                        {data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요
+                      </ListType>
                     </>
                   )}
                 </ListContents>

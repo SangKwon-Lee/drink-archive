@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import { Rating } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 const style = {

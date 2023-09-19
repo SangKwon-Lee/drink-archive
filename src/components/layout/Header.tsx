@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Images from '@utils/images';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { deleteCookie } from 'cookies-next';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';

@@ -1,11 +1,12 @@
 'use client';
 import Images from '@utils/images';
 import { toast } from 'react-toastify';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { useCallback, useEffect, useState } from 'react';
 
 // components
 import { Rating } from '@mui/material';
+import Review from '@components/card/Review';
 import RecoList from '@components/list/RecoList';
 import ReviewModal from '@components/modal/ReviewModal';
 import RatingReviewList from '@components/list/RatingReviewList';
@@ -15,7 +16,6 @@ import useAPI from '@api/index';
 import { toFixedNumber } from '@utils/toFixedNumber';
 import { Main, MainWrap } from '@styles/commonStyles';
 import { BeerDetailType, BeerRecomendType, BeerReviewRatingListType } from 'type';
-import Review from '@components/card/Review';
 
 interface Props {
   data: BeerDetailType;
@@ -25,7 +25,6 @@ interface Props {
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 export default function BeerDetailPage({ data, userId }: Props) {
-  console.log(userId);
   const apiServer = useAPI();
 
   // * 리뷰 모달
@@ -121,7 +120,6 @@ export default function BeerDetailPage({ data, userId }: Props) {
   const handleMyReview = async () => {
     try {
       const { data: result, status } = await apiServer.get(`/beer-my-rating/${userId}/${data.id}`);
-      console.log(result);
       if (status === 200) {
         setMyReview(result);
       }

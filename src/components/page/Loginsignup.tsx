@@ -8,7 +8,7 @@ import { SignupShemeType } from 'type';
 import { setCookie } from 'cookies-next';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { Main } from '@styles/commonStyles';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { usePathname, useRouter } from 'next/navigation';

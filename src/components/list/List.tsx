@@ -38,7 +38,9 @@ export default function List({ list }: Props) {
                   />
                   <RatingNum>{toFixedNumber(data.attributes?.rating)}</RatingNum>
                 </RatingWrap>
-                <ListType>{data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요</ListType>
+                <ListType>
+                  {data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요
+                </ListType>
               </ListContents>
             </ListItem>
           </Link>
@@ -98,7 +100,7 @@ const ListImg = styled.div`
 `;
 
 const ListContents = styled.div`
-display: flex;
+  display: flex;
   flex-direction: column;
   padding: 16px;
   gap: 4px;

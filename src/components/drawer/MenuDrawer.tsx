@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Images from '@utils/images';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { usePathname } from 'next/navigation';
 import { SwipeableDrawer } from '@mui/material';
 import { Dispatch, SetStateAction } from 'react';
@@ -78,12 +78,12 @@ const DrawerLogoWrap = styled.div`
 const DrawerLogo = styled.nav`
   transition: all 0.2s;
   text-decoration: none;
-  
+
   ${({ theme }) => theme.textSize.S20W700};
   &:hover {
     color: ${({ theme }) => theme.palette.orange};
   }
-  
+
   &:visited {
     color: ${({ theme }) => theme.gray.gray10};
   }

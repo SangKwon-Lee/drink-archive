@@ -5,7 +5,7 @@ const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 const defaultOptions = {
   baseURL: API_HOST
 };
-export default function useAPI() {
+export default function userAPI() {
   const instance = axios.create(defaultOptions);
   useEffect(() => {
     const token = getCookie('_ga_t');

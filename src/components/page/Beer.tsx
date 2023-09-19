@@ -1,6 +1,6 @@
 'use client';
 import _ from 'lodash';
-import { styled } from 'styled-components';
+import styled from 'styled-components';
 import { useEffect, useMemo, useState } from 'react';
 
 // components
@@ -11,9 +11,9 @@ import MainBanner from '@components/banner/MainBanner';
 import CustomPagination from '@components/pagination/Pagination';
 
 // utils & type
-import useAPI from '@api/index';
 import Images from '@utils/images';
 import { BeerListType } from 'type';
+import publicAPI from '@api/public';
 
 const sortArr = [
   {
@@ -49,10 +49,8 @@ const typeArr = [
   }
 ];
 
-const API_TOKEN = process.env.NEXT_PUBLIC_API_TOKEN;
-
 export default function BeerPage() {
-  const apiServer = useAPI();
+  const publicServer = publicAPI();
 
   const [loading, setLoading] = useState(true);
 
@@ -88,15 +86,10 @@ export default function BeerPage() {
   const handleGetBeerList = async () => {
     setLoading(true);
     try {
-      const { data, status } = await apiServer.get(
+      const { data, status } = await publicServer.get(
         `/beers?populate=thumbnail&sort=${sort}&filters[name][$contains]=${search}&filters[type][$contains]=${
           type === '전체' ? '' : type
-        }`,
-        {
-          headers: {
-            Authorization: `Bearer ${API_TOKEN}`
-          }
-        }
+        }`
       );
       if (status === 200 && Array.isArray(data.data)) {
         setTotal(data.meta.pagination.pageCount);
