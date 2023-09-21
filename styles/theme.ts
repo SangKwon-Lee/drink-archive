@@ -16,7 +16,10 @@ export const defaultTheme: DefaultTheme = {
   palette: {
     orange: '#FDB22D'
   },
-  shadow: 'rgb(0 0 0/10%)',
+  shadow10: '0 10px 34px rgba(0 0 0/0.08)',
+  shadow20: '0 4px 12px rgba(0 0 0/0.12)',
+  shadow30: '0 12px 60px rgba(0 0 0/0.1)',
+  shadow40: '0 35px 64px rgba(0 0 0/0.24)',
   textSize: {
     S12W400: css`
       font-style: normal;

@@ -16,7 +16,10 @@ declare module 'styled-components' {
     palette: {
       orange: string;
     };
-    shadow: string;
+    shadow10: string;
+    shadow20: string;
+    shadow30: string;
+    shadow40: string;
     textSize: {
       S12W400: SerializedStyles;
       S12W500: SerializedStyles;

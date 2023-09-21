@@ -151,4 +151,29 @@ export interface UserInfoType {
   id: number;
   username: string;
   nickname: string;
+  count: number;
+  reviewAvg: number;
+}
+
+export interface MyRatingBeerListAPI {
+  list: MyRatingBeerList[];
+  totalPage: number;
+}
+
+export interface MyRatingBeerList {
+  id: number;
+  rating: number;
+  updatedAt: string;
+  beers: {
+    company: string;
+    createdAt: string;
+    description: string;
+    id: number;
+    name: string;
+    people: number;
+    publishedAt: string;
+    rating: number;
+    type: string;
+    updatedAt: string;
+  }[];
 }

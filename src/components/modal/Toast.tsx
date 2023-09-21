@@ -7,6 +7,7 @@ const Container = styled(ToastContainer)`
   .Toastify__toast-container {
     width: auto !important;
   }
+
   .Toastify__toast {
     width: auto;
     margin-left: auto;

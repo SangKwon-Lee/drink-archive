@@ -4,6 +4,7 @@ import { BeerListType } from 'type';
 import styled from 'styled-components';
 import { Rating } from '@mui/material';
 import { toFixedNumber } from '@utils/toFixedNumber';
+import { ChangeUrl } from '@utils/urlRegex';
 
 interface Props {
   title: string;
@@ -21,7 +22,7 @@ export default function RowScrollList({ list, title, isRating }: Props) {
         {Array.isArray(list) &&
           list.length > 0 &&
           list.map((data, index) => (
-            <Link href={`/beer/${data.id}`} key={data.id}>
+            <Link href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`} key={data.id}>
               <HomeListItem key={index}>
                 <ListImg>
                   <Images

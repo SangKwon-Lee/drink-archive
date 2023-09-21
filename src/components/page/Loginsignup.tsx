@@ -2,7 +2,6 @@
 import * as yup from 'yup';
 import Link from 'next/link';
 import useAPI from '@api/index';
-import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { SignupShemeType } from 'type';
 import { setCookie } from 'cookies-next';
@@ -144,7 +143,7 @@ const LoginCard = styled.form`
   padding: 40px 24px;
   border-radius: 36px;
   background-color: white;
-  box-shadow: ${({ theme }) => `2px 3px 10px ${theme.shadow}`};
+  box-shadow: ${({ theme }) => theme.shadow10};
   gap: 24px;
 `;
 

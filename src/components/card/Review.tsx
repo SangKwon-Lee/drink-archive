@@ -1,8 +1,6 @@
 import dayjs from 'dayjs';
-import Images from '@utils/images';
 import { Rating } from '@mui/material';
 import styled from 'styled-components';
-const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 interface Props {
   nickname: string;

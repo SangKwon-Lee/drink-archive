@@ -44,11 +44,12 @@ const RatingList = styled.ul`
 `;
 
 const RatingItem = styled.li`
-  border-bottom: 1px solid ${({ theme }) => theme.gray.gray90};
   padding-bottom: 8px;
+  border-bottom: 1px solid ${({ theme }) => theme.gray.gray90};
+
   &:last-child {
+    padding-bottom: 0;
     border: none;
-    padding-bottom: 0px;
   }
 `;
 

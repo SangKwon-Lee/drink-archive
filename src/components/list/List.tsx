@@ -4,6 +4,7 @@ import { BeerListType } from 'type';
 import { Rating } from '@mui/material';
 import styled from 'styled-components';
 import { toFixedNumber } from '@utils/toFixedNumber';
+import { ChangeUrl } from '@utils/urlRegex';
 
 interface Props {
   list: BeerListType[];
@@ -16,7 +17,7 @@ export default function List({ list }: Props) {
     <ListWrap>
       {Array.isArray(list) && list.length > 0 ? (
         list.map((data) => (
-          <Link href={`/beer/${data.id}`} key={data.id}>
+          <Link href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`} key={data.id}>
             <ListItem>
               <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
                 <Images

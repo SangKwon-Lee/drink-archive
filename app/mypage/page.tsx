@@ -12,19 +12,27 @@ async function getUserId() {
       }
     });
     if (status === 200) {
-      return data;
+      const { data: myRating } = await axios.get(`${API_HOST}/my-rating-beer-count/${data.id}`);
+      return {
+        ...data,
+        ...myRating
+      };
     } else {
       return {
         id: 0,
         username: '',
-        nickname: ''
+        nickname: '',
+        count: 0,
+        reviewAvg: 0
       };
     }
   } catch (e) {
     return {
       id: 0,
       username: '',
-      nickname: ''
+      nickname: '',
+      count: 0,
+      reviewAvg: 0
     };
   }
 }

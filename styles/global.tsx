@@ -93,11 +93,13 @@ export const GlobalStyles = createGlobalStyle`
   a {
     display: inline-block;
     text-decoration: none;
+    color:${({ theme }) => theme.gray.gray10} !important;
   }
 
   a:link,
   a:visited,
   a:active {
+    color:${({ theme }) => theme.gray.gray10} !important;
     text-decoration: none;
   }
 

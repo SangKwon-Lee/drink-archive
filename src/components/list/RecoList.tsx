@@ -4,6 +4,7 @@ import { Rating } from '@mui/material';
 import styled from 'styled-components';
 import { BeerRecomendType } from 'type';
 import { toFixedNumber } from '@utils/toFixedNumber';
+import { ChangeUrl } from '@utils/urlRegex';
 
 interface Props {
   list: BeerRecomendType[];
@@ -17,7 +18,7 @@ export default function RecoList({ list }: Props) {
       {Array.isArray(list) &&
         list.length > 0 &&
         list.map((data) => (
-          <Link href={`/beer/${data.id}`} key={data.id}>
+          <Link href={`/beer/${ChangeUrl(data.name)}-${data.id}`} key={data.id}>
             <ListItem>
               <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
                 <Images style={{ objectFit: 'cover' }} src={`${IMG_HOST}${data.thumbnail.url}`} />
