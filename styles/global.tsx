@@ -197,4 +197,11 @@ export const GlobalStyles = createGlobalStyle`
     mask-image: radial-gradient(white, black);
   }
 
+  .Toastify__toast-container{
+    width: auto;
+  }
+  .Toastify__toast{
+    width: auto;
+  }
+
 `;

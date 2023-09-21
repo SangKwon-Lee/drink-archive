@@ -86,6 +86,10 @@ export default function LoginSignupPage() {
           setErrorMsg('이미 존재하는 아이디입니다');
         }
         if (e.response?.data.error.message === 'Invalid identifier or password') {
+          toast.error('이메일이나 비밀번호를 다시 확인해주세요', {
+            autoClose: 2000,
+            hideProgressBar: true
+          });
           setErrorMsg('이메일이나 비밀번호를 다시 확인해주세요');
         }
       }
@@ -105,7 +109,6 @@ export default function LoginSignupPage() {
       <Logo>Drink Acrhive</Logo>
       <LoginCard onSubmit={handleSubmit(handlePostSignupLogin)}>
         <TextInput placeholder="ID" {...register('username')} />
-        {/* {errorMsg.includes('아이디') && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
         {errors?.username && <ErrorMsg>{errors?.username.message}</ErrorMsg>}
         <TextInput
           placeholder="PASSWORD"
@@ -127,8 +130,7 @@ export default function LoginSignupPage() {
             {errors?.nickname && <ErrorMsg>{errors?.nickname?.message}</ErrorMsg>}
           </>
         )}
-        {/* {errorMsg.includes('닉네임') && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
-        {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
+        {/* {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
         <BtnWrap>
           <Btn>{BtnText}</Btn>
         </BtnWrap>
