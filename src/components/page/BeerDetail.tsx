@@ -38,7 +38,6 @@ export default function BeerDetailPage({ data, userId }: Props) {
     id: 0,
     rating: 0,
     updatedAt: '',
-    profile: '',
     nickname: ''
   });
   // * 하단 추천 리스트
@@ -180,7 +179,6 @@ export default function BeerDetailPage({ data, userId }: Props) {
                 date={myReview.updatedAt}
                 nickname={myReview.nickname}
                 rating={myReview.rating}
-                profile={myReview.profile}
               />
             ) : (
               <RatingText>아직 별점을 남기지 않으셨어요.</RatingText>

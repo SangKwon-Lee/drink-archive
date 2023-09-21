@@ -17,7 +17,6 @@ export default function RatingReviewList({ ratingList }: Props) {
               rating={rating.attributes.rating}
               date={rating.attributes.updatedAt}
               nickname={rating.attributes.user.data?.attributes.nickname}
-              profile={rating.attributes.user.data?.attributes.profile?.data?.attributes?.url}
             />
           </RatingItem>
         ))
@@ -44,7 +43,14 @@ const RatingList = styled.ul`
   gap: 24px;
 `;
 
-const RatingItem = styled.li``;
+const RatingItem = styled.li`
+  border-bottom: 1px solid ${({ theme }) => theme.gray.gray90};
+  padding-bottom: 8px;
+  &:last-child {
+    border: none;
+    padding-bottom: 0px;
+  }
+`;
 
 const RatingDate = styled.div`
   padding-top: 2px;

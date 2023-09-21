@@ -5,16 +5,14 @@ import styled from 'styled-components';
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 interface Props {
-  profile: string;
   nickname: string;
   date: string;
   rating: number;
 }
 
-export default function Review({ profile, nickname, date, rating }: Props) {
+export default function Review({ nickname, date, rating }: Props) {
   return (
     <RatingItem>
-      <Images src={`${IMG_HOST}${profile}`} width={50} height={50} circle />
       <RatingStarWrap>
         <RatingNameWrap>
           <RatingName>{nickname}</RatingName>

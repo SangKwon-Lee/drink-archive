@@ -59,12 +59,10 @@ export default function LoginSignupPage() {
           window.location.href = '/';
         }
       } else {
-        const { data: profile } = await apiServer.get(`/upload/files?filters[name][$eq]=profile`);
         await apiServer.post(`/users`, {
           ...data,
           email: `${data.nickname}@drink.com`,
-          role: 1,
-          profile: profile[0].id
+          role: 1
         });
         toast.success('회원가입을 축하합니다');
         setTimeout(() => {
