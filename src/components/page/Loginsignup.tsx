@@ -62,11 +62,12 @@ export default function LoginSignupPage() {
           window.location.href = '/';
         }
       } else {
+        const { data: profile } = await apiServer.get(`/upload/files?filters[name][$eq]=profile`);
         await apiServer.post(`/users`, {
           ...data,
           email: `${data.nickname}@drink.com`,
           role: 1,
-          profile: 2
+          profile: profile[0].id
         });
         toast.success('회원가입을 축하합니다', {
           autoClose: 1000,
@@ -81,8 +82,12 @@ export default function LoginSignupPage() {
         if (e.response?.data.error.message === 'Email already taken') {
           setErrorMsg('이미 존재하는 닉네임입니다');
         }
-        if (e.response?.data.error.message === 'This attribute must be unique')
+        if (e.response?.data.error.message === 'This attribute must be unique') {
           setErrorMsg('이미 존재하는 아이디입니다');
+        }
+        if (e.response?.data.error.message === 'Invalid identifier or password') {
+          setErrorMsg('이메일이나 비밀번호를 다시 확인해주세요');
+        }
       }
     }
   };
@@ -95,13 +100,12 @@ export default function LoginSignupPage() {
   } = useForm({
     resolver: yupResolver(schema)
   });
-
   return (
     <Main>
       <Logo>Drink Acrhive</Logo>
       <LoginCard onSubmit={handleSubmit(handlePostSignupLogin)}>
         <TextInput placeholder="ID" {...register('username')} />
-        {errorMsg.includes('아이디') && <ErrorMsg>{errorMsg}</ErrorMsg>}
+        {/* {errorMsg.includes('아이디') && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
         {errors?.username && <ErrorMsg>{errors?.username.message}</ErrorMsg>}
         <TextInput
           placeholder="PASSWORD"
@@ -123,7 +127,8 @@ export default function LoginSignupPage() {
             {errors?.nickname && <ErrorMsg>{errors?.nickname?.message}</ErrorMsg>}
           </>
         )}
-        {errorMsg.includes('닉네임') && <ErrorMsg>{errorMsg}</ErrorMsg>}
+        {/* {errorMsg.includes('닉네임') && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
+        {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
         <BtnWrap>
           <Btn>{BtnText}</Btn>
         </BtnWrap>
