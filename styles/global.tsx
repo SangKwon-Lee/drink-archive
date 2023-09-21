@@ -196,12 +196,7 @@ export const GlobalStyles = createGlobalStyle`
     -webkit-mask-image: radial-gradient(white, black);
     mask-image: radial-gradient(white, black);
   }
-
-  .Toastify__toast-container{
-    width: auto;
-  }
-  .Toastify__toast{
-    width: auto;
-  }
-
+.Toastify__toast-container{
+  width: auto !important;
+}
 `;

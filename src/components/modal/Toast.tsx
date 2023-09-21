@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import { ToastContainer } from 'react-toastify';
 
 const Container = styled(ToastContainer)`
+  .Toastify__toast-container {
+    width: auto !important;
+  }
   .Toastify__toast {
-    width: 200px;
+    width: auto;
     margin-left: auto;
     font-size: 16px;
   }
@@ -14,7 +17,7 @@ const Container = styled(ToastContainer)`
 export default function ToastProvider() {
   return (
     <>
-      <Container />
+      <Container autoClose={2000} hideProgressBar />
     </>
   );
 }

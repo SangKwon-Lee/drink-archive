@@ -20,9 +20,6 @@ export default function LoginSignupPage() {
   const pathname = usePathname();
   const BtnText = pathname === '/login' ? 'LOGIN' : 'SIGNUP';
 
-  //* 이미 존재하는 아이디, 닉네임 에러 메시지
-  const [errorMsg, setErrorMsg] = useState('');
-
   // * yup schema 처리
   const schema = yup.object().shape({
     username: yup.string().required('ID는 필수입니다.'),
@@ -69,10 +66,7 @@ export default function LoginSignupPage() {
           role: 1,
           profile: profile[0].id
         });
-        toast.success('회원가입을 축하합니다', {
-          autoClose: 1000,
-          hideProgressBar: true
-        });
+        toast.success('회원가입을 축하합니다');
         setTimeout(() => {
           router.push('/login');
         }, 1000);
@@ -80,17 +74,13 @@ export default function LoginSignupPage() {
     } catch (e: AxiosError | unknown) {
       if (axios.isAxiosError(e)) {
         if (e.response?.data.error.message === 'Email already taken') {
-          setErrorMsg('이미 존재하는 닉네임입니다');
+          toast.error('이미 존재하는 닉네임입니다');
         }
         if (e.response?.data.error.message === 'This attribute must be unique') {
-          setErrorMsg('이미 존재하는 아이디입니다');
+          toast.error('이미 존재하는 아이디입니다');
         }
         if (e.response?.data.error.message === 'Invalid identifier or password') {
-          toast.error('이메일이나 비밀번호를 다시 확인해주세요', {
-            autoClose: 2000,
-            hideProgressBar: true
-          });
-          setErrorMsg('이메일이나 비밀번호를 다시 확인해주세요');
+          toast.error('이메일이나 비밀번호를 다시 확인해주세요');
         }
       }
     }
@@ -130,7 +120,6 @@ export default function LoginSignupPage() {
             {errors?.nickname && <ErrorMsg>{errors?.nickname?.message}</ErrorMsg>}
           </>
         )}
-        {/* {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>} */}
         <BtnWrap>
           <Btn>{BtnText}</Btn>
         </BtnWrap>
@@ -216,9 +205,4 @@ const ErrorMsg = styled.div`
   margin-left: 8px;
   color: ${({ theme }) => theme.palette.orange};
   ${({ theme }) => theme.textSize.S12W400};
-`;
-
-const ToastMsg = styled.div`
-  color: ${({ theme }) => theme.gray.gray10};
-  ${({ theme }) => theme.textSize.S16W400};
 `;
