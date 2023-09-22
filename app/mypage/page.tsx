@@ -2,6 +2,7 @@ import axios from 'axios';
 import { UserInfoType } from 'type';
 import { cookies } from 'next/headers';
 import MypagePage from '@components/page/Mypage';
+import { redirect } from 'next/navigation';
 const API_HOST = process.env.NEXT_PUBLIC_API_HOST;
 async function getUserId() {
   const userToken = cookies().get('_ga_t')?.value;
@@ -18,22 +19,10 @@ async function getUserId() {
         ...myRating
       };
     } else {
-      return {
-        id: 0,
-        username: '',
-        nickname: '',
-        count: 0,
-        reviewAvg: 0
-      };
+      redirect('/login');
     }
   } catch (e) {
-    return {
-      id: 0,
-      username: '',
-      nickname: '',
-      count: 0,
-      reviewAvg: 0
-    };
+    redirect('/login');
   }
 }
 

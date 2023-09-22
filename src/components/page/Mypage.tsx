@@ -15,7 +15,6 @@ interface Props {
 }
 
 export default function MypagePage({ userInfo }: Props) {
-  const router = useRouter();
   const apiServer = publicAPI();
   const [page, setPage] = useState(1);
   const [list, setList] = useState<MyRatingBeerList[]>([]);
@@ -32,12 +31,6 @@ export default function MypagePage({ userInfo }: Props) {
       console.log(e);
     }
   };
-
-  useEffect(() => {
-    if (userInfo.id === 0) {
-      router.push('/login');
-    }
-  }, []);
   useEffect(() => {
     if (userInfo.id !== 0) {
       handleGetMyReviewList();
