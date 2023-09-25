@@ -11,8 +11,7 @@ interface Props {
 export default function MyBeerReviewList({ list }: Props) {
   return (
     <ReviewList>
-      {Array.isArray(list) &&
-        list.length > 0 &&
+      {Array.isArray(list) && list.length > 0 ? (
         list.map((data) => (
           <CustomLink
             href={`/beer/${ChangeUrl(data.beers[0].name)}-${data.beers[0].id}`}
@@ -37,7 +36,14 @@ export default function MyBeerReviewList({ list }: Props) {
               </ReviewRightWrap>
             </ReviewItem>
           </CustomLink>
-        ))}
+        ))
+      ) : (
+        <CustomLink href={`/`}>
+          <ReviewItem>
+            <ReviewTitle>리뷰를 남겨주세요!</ReviewTitle>
+          </ReviewItem>
+        </CustomLink>
+      )}
     </ReviewList>
   );
 }

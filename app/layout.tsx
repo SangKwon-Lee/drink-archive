@@ -5,8 +5,8 @@ import { Roboto } from 'next/font/google';
 // styles
 import Providers from '@styles/providers';
 import 'react-toastify/dist/ReactToastify.css';
+import { Analytics } from '@vercel/analytics/react';
 import StyledComponentsRegistry from '@styles/registry';
-
 // components
 import Header from '@components/layout/Header';
 import Footer from '@components/layout/Footer';
@@ -66,6 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Header isLogin={isLogin} />
             {children}
             <Footer />
+            <Analytics />
           </body>
         </html>
       </Providers>

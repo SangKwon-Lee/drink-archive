@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { MyRatingBeerListAPI, UserInfoType, MyRatingBeerList } from 'type';
 import styled from 'styled-components';
-import { useRouter } from 'next/navigation';
 import { Main } from '@styles/commonStyles';
 import Images from '@utils/images';
 import { Rating } from '@mui/material';
@@ -19,7 +18,7 @@ export default function MypagePage({ userInfo }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<MyRatingBeerList[]>([]);
   const [total, setTotal] = useState(0);
-
+  console.log(userInfo);
   const handleGetMyReviewList = async () => {
     try {
       const { data } = await apiServer.get<MyRatingBeerListAPI>(
@@ -60,13 +59,15 @@ export default function MypagePage({ userInfo }: Props) {
                 readOnly
                 size="large"
               />
-              {userInfo.reviewAvg}점
+              {userInfo.reviewAvg || 0}점
             </MyDataCount>
           </MyDataTitleWrap>
         </MyDataCard>
         <MyDataTitle>리뷰 목록</MyDataTitle>
         <MyBeerReviewList list={list} />
-        <CustomPagination total={total} page={page} setPage={setPage} />
+        {Array.isArray(list) && list.length > 0 && (
+          <CustomPagination total={total} page={page} setPage={setPage} />
+        )}
       </MyCard>
     </Main>
   );
