@@ -13,11 +13,8 @@ export default function MyBeerReviewList({ list }: Props) {
     <ReviewList>
       {Array.isArray(list) && list.length > 0 ? (
         list.map((data) => (
-          <CustomLink
-            href={`/beer/${ChangeUrl(data.beers[0].name)}-${data.beers[0].id}`}
-            key={data.id}
-          >
-            <ReviewItem>
+          <ReviewItem key={data.id}>
+            <CustomLink href={`/beer/${ChangeUrl(data.beers[0].name)}-${data.beers[0].id}`}>
               <ReviewLeftWrap>
                 <ReviewTitle>{data.beers[0].name}</ReviewTitle>
                 <ReviewType>
@@ -34,8 +31,8 @@ export default function MyBeerReviewList({ list }: Props) {
                 />
                 <ReviewType>{dayjs(data.updatedAt).format('YYYY-MM-DD HH:mm')}</ReviewType>
               </ReviewRightWrap>
-            </ReviewItem>
-          </CustomLink>
+            </CustomLink>
+          </ReviewItem>
         ))
       ) : (
         <CustomLink href={`/`}>

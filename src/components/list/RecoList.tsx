@@ -18,8 +18,8 @@ export default function RecoList({ list }: Props) {
       {Array.isArray(list) &&
         list.length > 0 &&
         list.map((data) => (
-          <Link href={`/beer/${ChangeUrl(data.name)}-${data.id}`} key={data.id}>
-            <ListItem>
+          <ListItem key={data.id}>
+            <CustomList href={`/beer/${ChangeUrl(data.name)}-${data.id}`}>
               <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
                 <Images style={{ objectFit: 'cover' }} src={`${IMG_HOST}${data.thumbnail.url}`} />
               </ListImg>
@@ -39,8 +39,8 @@ export default function RecoList({ list }: Props) {
                 </RatingWrap>
                 <ListType>{data.people ? data.people : 0}명이 별점을 남겼어요</ListType>
               </ListContents>
-            </ListItem>
-          </Link>
+            </CustomList>
+          </ListItem>
         ))}
     </ListWrap>
   );
@@ -124,4 +124,7 @@ const RatingNum = styled.div`
   margin-left: 4px;
   color: ${({ theme }) => theme.gray.gray10};
   ${({ theme }) => theme.textSize.S16W400};
+`;
+const CustomList = styled(Link)`
+  width: 100%;
 `;

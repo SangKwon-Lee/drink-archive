@@ -17,8 +17,8 @@ export default function List({ list }: Props) {
     <ListWrap>
       {Array.isArray(list) && list.length > 0 ? (
         list.map((data) => (
-          <Link href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`} key={data.id}>
-            <ListItem>
+          <ListItem key={data.id}>
+            <CustomList href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`}>
               <ListImg style={{ position: 'relative', width: '100%', height: '300px' }}>
                 <Images
                   style={{ objectFit: 'cover' }}
@@ -43,8 +43,8 @@ export default function List({ list }: Props) {
                   {data.attributes.people ? data.attributes.people : 0}명이 별점을 남겼어요
                 </ListType>
               </ListContents>
-            </ListItem>
-          </Link>
+            </CustomList>
+          </ListItem>
         ))
       ) : (
         <ListName>리스트가 없습니다</ListName>
@@ -132,4 +132,7 @@ const RatingNum = styled.div`
   margin-left: 4px;
   color: ${({ theme }) => theme.gray.gray10};
   ${({ theme }) => theme.textSize.S16W400};
+`;
+const CustomList = styled(Link)`
+  width: 100%;
 `;

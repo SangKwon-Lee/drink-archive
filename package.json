@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "postbuild": "next-sitemap",
     "ts-prune": "ts-prune | grep -E -v '(used in module)|default'",
     "lint:styled": "stylelint 'src/**/*.{ts,tsx}' --fix"
   },

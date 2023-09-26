@@ -22,8 +22,8 @@ export default function RowScrollList({ list, title, isRating }: Props) {
         {Array.isArray(list) &&
           list.length > 0 &&
           list.map((data, index) => (
-            <Link href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`} key={data.id}>
-              <HomeListItem key={index}>
+            <HomeListItem key={data.id}>
+              <CustomList href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`}>
                 <ListImg>
                   <Images
                     src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
@@ -52,8 +52,8 @@ export default function RowScrollList({ list, title, isRating }: Props) {
                     </>
                   )}
                 </ListContents>
-              </HomeListItem>
-            </Link>
+              </CustomList>
+            </HomeListItem>
           ))}
       </HomeList>
     </>
@@ -129,4 +129,8 @@ const RatingNum = styled.div`
   margin-left: 4px;
   color: ${({ theme }) => theme.gray.gray10};
   ${({ theme }) => theme.textSize.S16W400};
+`;
+
+const CustomList = styled(Link)`
+  width: 100%;
 `;
