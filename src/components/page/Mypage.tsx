@@ -18,7 +18,6 @@ export default function MypagePage({ userInfo }: Props) {
   const [page, setPage] = useState(1);
   const [list, setList] = useState<MyRatingBeerList[]>([]);
   const [total, setTotal] = useState(0);
-  console.log(userInfo);
   const handleGetMyReviewList = async () => {
     try {
       const { data } = await apiServer.get<MyRatingBeerListAPI>(

@@ -152,7 +152,9 @@ export default function BeerDetailPage({ data, userId }: Props) {
             <ProductContents>
               <ProductComp>제조사 / {data.attributes?.company}</ProductComp>
               <ProductName>{data.attributes?.name}</ProductName>
-              <ProductComp>{data.attributes?.type}</ProductComp>
+              <ProductComp>
+                {data.attributes?.type} / {data.attributes.abv}% ABV
+              </ProductComp>
               <RatingWrap>
                 <Rating
                   name="read-only"

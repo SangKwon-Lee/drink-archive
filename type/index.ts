@@ -84,6 +84,7 @@ export interface BeerDetailType {
     type: string;
     updatedAt: string;
     people: number;
+    abv: number;
     rating: number;
     beer_ratings: {
       data: BeerRatingType[];
