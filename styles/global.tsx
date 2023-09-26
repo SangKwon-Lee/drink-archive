@@ -8,7 +8,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: 10px;
     letter-spacing: -0.01em;
     vertical-align: baseline;
-    background-color: #F6F6F6;
+    background-color: #f9f9f9;
     appearance: none;
     -webkit-appearence: none;
     border-collapse: collapse;
