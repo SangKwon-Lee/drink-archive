@@ -55,11 +55,6 @@ export default function HomePage() {
 
   return (
     <>
-      <iframe
-        width={300}
-        height={300}
-        src="https://pcmap.place.naver.com/restaurant/1112803147/home?from=map&fromPanelNum=1&x=127.1137227&y=37.3950278&timestamp=202309271119"
-      />
       <MainBanner title="Drink Archive" src="/banner/home_banner.jpg" />
       <Main>
         <MainWrap>
