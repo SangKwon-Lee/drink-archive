@@ -14,21 +14,24 @@ const NavArr = [
   {
     href: '/beer',
     text: 'Beer',
-    icon: '/icon/icon_beer.svg'
+    icon: '/icon/icon_beer.svg',
+    alt: '맥주 아이콘'
   },
   {
     href: '/whiskey',
     text: 'Whiskey',
-    icon: '/icon/icon_whiskey.svg'
+    icon: '/icon/icon_whiskey.svg',
+    alt: '위스키 아이콘'
   },
   {
     href: '/wine',
     text: 'Wine',
-    icon: '/icon/icon_wine.svg'
+    icon: '/icon/icon_wine.svg',
+    alt: '와인 아이콘'
   }
 ];
 
-const LinkStyle = styled(Link)`
+const LinkWrap = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
@@ -45,16 +48,27 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
     >
       <DrawerWrap>
         <DrawerLogoWrap>
-          <LinkStyle href={'/'} title="home">
-            <NavItem>Drink Archive</NavItem>
-          </LinkStyle>
+          <LinkWrap>
+            <NavItem href={'/'} title="home">
+              Drink Archive
+            </NavItem>
+          </LinkWrap>
         </DrawerLogoWrap>
         <NavWrap>
-          {NavArr.map(({ href, text, icon }) => (
-            <LinkStyle href={href} title={text} key={href} onClick={() => setOpen(false)}>
-              <Images src={icon} width={24} height={24} />
-              <NavItem $isPath={pathname === href}>{text}</NavItem>
-            </LinkStyle>
+          {NavArr.map(({ href, text, icon, alt }) => (
+            <LinkWrap>
+              <Images alt={alt} src={icon} width={24} height={24} />
+              <NavItem
+                href={href}
+                aria-label={`${text}페이지로 이동`}
+                title={text}
+                key={href}
+                onClick={() => setOpen(false)}
+                $isPath={pathname === href}
+              >
+                {text}
+              </NavItem>
+            </LinkWrap>
           ))}
         </NavWrap>
       </DrawerWrap>
@@ -62,7 +76,7 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
   );
 }
 
-const DrawerWrap = styled.div`
+const DrawerWrap = styled.aside`
   display: flex;
   flex-direction: column;
   width: 250px;
@@ -75,27 +89,13 @@ const DrawerLogoWrap = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.gray.gray80};
 `;
 
-const DrawerLogo = styled.nav`
-  transition: all 0.2s;
-  text-decoration: none;
-
-  ${({ theme }) => theme.textSize.S20W700};
-  &:hover {
-    color: ${({ theme }) => theme.palette.orange};
-  }
-
-  &:visited {
-    color: ${({ theme }) => theme.gray.gray10};
-  }
-`;
-
-const NavWrap = styled.aside`
+const NavWrap = styled.nav`
   display: flex;
   flex-direction: column;
   gap: 36px;
 `;
 
-const NavItem = styled.nav<{ $isPath?: boolean }>`
+const NavItem = styled(Link)<{ $isPath?: boolean }>`
   transition: all 0.2s;
   color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
 

@@ -11,6 +11,7 @@ interface Props {
   onClick?: any;
   loader?: any;
   circle?: boolean;
+  alt?: string;
 }
 
 export default function Images({
@@ -21,13 +22,14 @@ export default function Images({
   onClick,
   style,
   loader,
-  circle
+  circle,
+  alt
 }: Props) {
   return (
     <Image
       src={`${src}`}
       loader={loader}
-      alt={src}
+      alt={alt ? alt : src}
       quality={20}
       width={width}
       fill={!width && !height ? true : false}
@@ -35,9 +37,7 @@ export default function Images({
       onClick={onClick}
       style={{ ...style, borderRadius: circle ? '50%' : '' }}
       className={className}
-      priority
       blurDataURL="/"
-      unoptimized
     />
   );
 }

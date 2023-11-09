@@ -63,9 +63,15 @@ export default function Header({ isLogin }: Props) {
           <NavWrap>
             {NavArr.map(({ href, text }, index) => (
               <NavItemWrap key={href}>
-                <Link href={href} title={text}>
-                  <NavItem $isPath={pathname.includes(text.toLowerCase())}>{text}</NavItem>
-                </Link>
+                <NavLink
+                  aria-label={`${text}페이지로 이동`}
+                  about={text}
+                  href={href}
+                  title={text}
+                  $isPath={pathname.includes(text.toLowerCase())}
+                >
+                  {text}
+                </NavLink>
                 {index !== NavArr.length - 1 && <NavBorder />}
               </NavItemWrap>
             ))}
@@ -78,22 +84,32 @@ export default function Header({ isLogin }: Props) {
             onClick={() => setOpenDrawer(true)}
           />
         </LogoWrap>
-        {!isLogin ? (
+        {isLogin ? (
           <LoginWrap>
             {LoginArr.map(({ href, text }, index) => (
               <NavItemWrap key={href}>
-                <Link href={href} title={text}>
-                  <NavItem $isPath={pathname === href}>{text}</NavItem>
-                </Link>
+                <NavLink
+                  href={href}
+                  title={text}
+                  $isPath={pathname === href}
+                  aria-label={`${text}페이지로 이동`}
+                >
+                  {text}
+                </NavLink>
                 {index !== LoginArr.length - 1 && <NavBorder />}
               </NavItemWrap>
             ))}
           </LoginWrap>
         ) : (
           <NavItemWrap>
-            <Link href={'/mypage'} title={'mypage'}>
-              <NavItem $isPath={pathname === '/mypage'}>{'Mypage'}</NavItem>
-            </Link>
+            <NavLink
+              href={'/mypage'}
+              title={'mypage'}
+              aria-label={`마이페이지로 이동`}
+              $isPath={pathname === '/mypage'}
+            >
+              {'Mypage'}
+            </NavLink>
             <NavBorder />
             <NavItem onClick={handleLogout} style={{ marginLeft: '24px' }}>
               Logout
@@ -107,7 +123,7 @@ export default function Header({ isLogin }: Props) {
   );
 }
 
-export const HeaderLayout = styled.div<{ $path: string }>`
+export const HeaderLayout = styled.header<{ $path: string }>`
   display: flex;
   position: sticky;
   z-index: 1;
@@ -119,7 +135,7 @@ export const HeaderLayout = styled.div<{ $path: string }>`
   background-color: ${({ $path }) => ($path === '/beer' ? '#f7f7f7' : 'white')};
 `;
 
-const HeaderWrap = styled.header`
+const HeaderWrap = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -159,18 +175,34 @@ const LoginWrap = styled.div`
   align-items: center;
 `;
 
+const NavLink = styled(Link)<{ $isPath?: boolean }>`
+  transition: all 0.2s;
+  color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
+  cursor: pointer;
+  ${({ $isPath, theme }) => ($isPath ? theme.textSize.S18W700 : theme.textSize.S18W400)};
+
+  &:hover {
+    color: ${({ theme }) => theme.palette.orange};
+  }
+
+  &:active {
+    opacity: 0.5;
+  }
+`;
+
 const NavItemWrap = styled.div`
   display: flex;
   align-items: center;
   text-transform: none;
 `;
+
 const NavBorder = styled.div`
   height: 12px;
   margin-left: 24px;
   border-right: 1px solid ${({ theme }) => theme.gray.gray80};
 `;
 
-const NavItem = styled.nav<{ $isPath?: boolean }>`
+const NavItem = styled.button<{ $isPath?: boolean }>`
   transition: all 0.2s;
   color: ${({ $isPath, theme }) => ($isPath ? theme.palette.orange : theme.gray.gray20)};
   cursor: pointer;
