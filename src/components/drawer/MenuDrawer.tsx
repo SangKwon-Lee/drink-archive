@@ -56,7 +56,7 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
         </DrawerLogoWrap>
         <NavWrap>
           {NavArr.map(({ href, text, icon, alt }) => (
-            <LinkWrap>
+            <LinkWrap key={alt}>
               <Images alt={alt} src={icon} width={24} height={24} />
               <NavItem
                 href={href}
