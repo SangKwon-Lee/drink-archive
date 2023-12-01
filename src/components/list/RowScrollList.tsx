@@ -26,7 +26,7 @@ export default function RowScrollList({ list, title, isRating }: Props) {
               <CustomList href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`}>
                 <ListImg>
                   <Images
-                    src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
+                    src={`${data.attributes.thumbnail.data.attributes.url}`}
                     style={{ objectFit: 'cover' }}
                   />
                 </ListImg>

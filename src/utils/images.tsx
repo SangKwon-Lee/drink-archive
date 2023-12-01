@@ -30,14 +30,13 @@ export default function Images({
       src={`${src}`}
       loader={loader}
       alt={alt ? alt : src}
-      quality={20}
+      quality={50}
       width={width}
       fill={!width && !height ? true : false}
       height={height}
       onClick={onClick}
       style={{ ...style, borderRadius: circle ? '50%' : '' }}
       className={className}
-      blurDataURL="/"
     />
   );
 }
