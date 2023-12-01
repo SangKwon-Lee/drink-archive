@@ -30,9 +30,10 @@ export default function RatingReviewList({ ratingList }: Props) {
 }
 
 const RatingSub = styled.div`
-  color: ${({ theme }) => theme.gray.gray30};
   padding: 20px 0;
   border-top: 1px solid ${({ theme }) => theme.gray.gray80};
+  color: ${({ theme }) => theme.gray.gray30};
+
   ${({ theme }) => theme.textSize.S14W400};
 `;
 
