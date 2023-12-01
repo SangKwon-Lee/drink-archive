@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Images from '@utils/images';
 import { BeerListType } from 'type';
 import styled from 'styled-components';
-import { Rating } from '@mui/material';
+import { Rating, Skeleton } from '@mui/material';
 import { toFixedNumber } from '@utils/toFixedNumber';
 import { ChangeUrl } from '@utils/urlRegex';
 
@@ -19,8 +19,7 @@ export default function RowScrollList({ list, title, isRating }: Props) {
     <>
       {title && <HomeTitle>{title}</HomeTitle>}
       <HomeList>
-        {Array.isArray(list) &&
-          list.length > 0 &&
+        {Array.isArray(list) && list.length > 0 ? (
           list.map((data) => (
             <HomeListItem key={data.id}>
               <CustomList href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`}>
@@ -51,7 +50,15 @@ export default function RowScrollList({ list, title, isRating }: Props) {
                 </ListContents>
               </CustomList>
             </HomeListItem>
-          ))}
+          ))
+        ) : (
+          <div
+            style={{
+              width: '336px',
+              height: '285px'
+            }}
+          ></div>
+        )}
       </HomeList>
     </>
   );
