@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Images from '@utils/images';
 import styled from 'styled-components';
 import { usePathname } from 'next/navigation';
 import { SwipeableDrawer } from '@mui/material';
@@ -57,7 +56,7 @@ export default function MenuDrawer({ open, setOpen }: MenuDrawerProps) {
         <NavWrap>
           {NavArr.map(({ href, text, icon, alt }) => (
             <LinkWrap key={alt}>
-              <Images alt={alt} src={icon} width={24} height={24} />
+              <img alt={alt} src={icon} width={24} height={24} />
               <NavItem
                 href={href}
                 aria-label={`${text}페이지로 이동`}

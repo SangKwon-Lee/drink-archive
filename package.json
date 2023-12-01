@@ -8,7 +8,8 @@
     "start": "next start",
     "postbuild": "next-sitemap",
     "ts-prune": "ts-prune | grep -E -v '(used in module)|default'",
-    "lint:styled": "stylelint 'src/**/*.{ts,tsx}' --fix"
+    "lint:styled": "stylelint 'src/**/*.{ts,tsx}' --fix",
+    "prettier-fix": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -45,6 +46,8 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.1.0",
     "postcss": "^8.4.29",
     "postcss-styled-syntax": "^0.4.0",
     "prettier": "^3.0.1",
@@ -55,5 +58,12 @@
     "stylelint-order": "^6.0.3",
     "stylelint-prettier": "^4.0.2",
     "stylelint-processor-styled-components": "^1.10.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx.ts,tsx}": [
+      "eslint --fix",
+      "prettier --write",
+      "git add"
+    ]
   }
 }

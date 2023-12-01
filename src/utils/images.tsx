@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image';
 import { CSSProperties } from 'react';
 
 interface Props {
@@ -12,6 +11,7 @@ interface Props {
   loader?: any;
   circle?: boolean;
   alt?: string;
+  position?: 'absolute' | 'relative';
 }
 
 export default function Images({
@@ -23,19 +23,24 @@ export default function Images({
   style,
   loader,
   circle,
-  alt
+  alt,
+  position = 'absolute'
 }: Props) {
   return (
-    <Image
+    <img
       src={`${src}`}
-      loader={loader}
       alt={alt ? alt : src}
-      quality={50}
-      width={width}
-      fill={!width && !height ? true : false}
-      height={height}
       onClick={onClick}
-      style={{ ...style, borderRadius: circle ? '50%' : '' }}
+      style={{
+        ...style,
+        borderRadius: circle ? '50%' : '',
+        position: position ? position : 'absolute',
+        height: width ? width : '100%',
+        width: height ? height : '100%',
+        objectFit: 'cover',
+        color: 'transparent',
+        display: 'block'
+      }}
       className={className}
     />
   );

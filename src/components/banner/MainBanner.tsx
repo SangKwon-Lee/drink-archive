@@ -9,7 +9,7 @@ interface MainBannerProps {
 export default function MainBanner({ src, title }: MainBannerProps) {
   return (
     <Banner>
-      <Images src={src} style={{ objectFit: 'cover' }} />
+      <Images src={src} />
       <BannerTitle>{title}</BannerTitle>
     </Banner>
   );
@@ -28,6 +28,7 @@ const BannerTitle = styled.h2`
   z-index: 1;
   margin: 0;
   color: white;
+  text-align: center;
 
   ${({ theme }) => theme.textSize.S64W700};
 `;

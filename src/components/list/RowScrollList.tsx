@@ -15,21 +15,17 @@ interface Props {
 const IMG_HOST = process.env.NEXT_PUBLIC_IMG_HOST;
 
 export default function RowScrollList({ list, title, isRating }: Props) {
-  console.log(IMG_HOST);
   return (
     <>
       {title && <HomeTitle>{title}</HomeTitle>}
       <HomeList>
         {Array.isArray(list) &&
           list.length > 0 &&
-          list.map((data, index) => (
+          list.map((data) => (
             <HomeListItem key={data.id}>
               <CustomList href={`/beer/${ChangeUrl(data.attributes.name)}-${data.id}`}>
                 <ListImg>
-                  <Images
-                    src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`}
-                    style={{ objectFit: 'cover' }}
-                  />
+                  <Images src={`${IMG_HOST}${data.attributes.thumbnail.data.attributes.url}`} />
                 </ListImg>
                 <ListContents>
                   <ListNameWrap>

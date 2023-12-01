@@ -217,7 +217,7 @@ const NavItem = styled.button<{ $isPath?: boolean }>`
   }
 `;
 
-const Menu = styled(Images)`
+const Menu = styled.img`
   display: none;
 
   @media ${({ theme }) => theme.media.mobile} {
